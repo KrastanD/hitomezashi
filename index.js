@@ -21,43 +21,47 @@ function drawPattern() {
   ctx.moveTo(0, 0);
   ctx.fillStyle = "white";
   ctx.font = "8px Arial";
-  for (let index = 0; index < width / 2; index += 1) {
-    ctx.strokeStyle = "hsla(" + Math.round(index * 2.5) + ", 100%, 50%, 1.0)";
-    ctx.beginPath();
-    const randomNumber = Math.round(Math.random() * 10);
-    ctx.fillText(`${isEven(randomNumber) ? 1 : 0}`, 0, index * 10 + 12);
-    if (isEven(randomNumber)) {
-      for (let i = 0; i < width; i += 20) {
-        ctx.moveTo(i + 10, index * 10 + 10);
-        ctx.lineTo(i + 20, index * 10 + 10);
-      }
-    } else {
-      for (let i = 10; i < width; i += 20) {
-        ctx.moveTo(i + 10, index * 10 + 10);
-        ctx.lineTo(i + 20, index * 10 + 10);
-      }
-    }
-    ctx.stroke();
-  }
 
-  for (let index = 0; index < height / 2; index += 1) {
-    ctx.strokeStyle = "hsla(" + Math.round(index * 1.5) + ", 100%, 50%, 1.0)";
+  drawHorizontalPattern();
+  drawVerticalPattern();
+}
+
+function drawHorizontalPattern() {
+  for (let index = 10; index < height; index += 10) {
+    ctx.strokeStyle = "hsla(" + Math.round(index / 1.5) + ", 100%, 50%, 1.0)";
     ctx.beginPath();
     const randomNumber = Math.round(Math.random() * 10);
-    ctx.fillText(`${isEven(randomNumber) ? 1 : 0}`, index * 10 + 8, 8);
-    if (isEven(randomNumber)) {
-      for (let i = 0; i < height; i += 20) {
-        ctx.moveTo(index * 10 + 10, i + 10);
-        ctx.lineTo(index * 10 + 10, i + 20);
-      }
-    } else {
-      for (let i = 10; i < height; i += 20) {
-        ctx.moveTo(index * 10 + 10, i + 10);
-        ctx.lineTo(index * 10 + 10, i + 20);
-      }
+    ctx.fillText(`${isEven(randomNumber) ? 1 : 0}`, 0, index + 2);
+    const startingIndex = isEven(randomNumber) ? 10 : 20;
+    for (let i = startingIndex; i < width; i += 20) {
+      drawHorizontalLine({ x: i, y: index }, 10);
     }
     ctx.stroke();
   }
+}
+
+function drawVerticalPattern() {
+  for (let index = 10; index < width; index += 10) {
+    ctx.strokeStyle = "hsla(" + Math.round(index / 2.5) + ", 100%, 50%, 1.0)";
+    ctx.beginPath();
+    const randomNumber = Math.round(Math.random() * 10);
+    ctx.fillText(`${isEven(randomNumber) ? 1 : 0}`, index - 2, 8);
+    const startingIndex = isEven(randomNumber) ? 10 : 20;
+    for (let i = startingIndex; i < height; i += 20) {
+      drawVerticalLine({ x: index, y: i }, 10);
+    }
+    ctx.stroke();
+  }
+}
+
+function drawHorizontalLine({ x, y }, distance) {
+  ctx.moveTo(x, y);
+  ctx.lineTo(x + distance, y);
+}
+
+function drawVerticalLine({ x, y }, distance) {
+  ctx.moveTo(x, y);
+  ctx.lineTo(x, y + distance);
 }
 
 function drawGrid() {
