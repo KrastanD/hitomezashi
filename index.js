@@ -19,23 +19,22 @@ drawPattern();
 
 function drawPattern() {
   ctx.moveTo(0, 0);
-
+  ctx.fillStyle = "white";
+  ctx.font = "8px Arial";
   for (let index = 0; index < width / 2; index += 1) {
-    console.log(Math.round(index * 2));
     ctx.strokeStyle = "hsla(" + Math.round(index * 2.5) + ", 100%, 50%, 1.0)";
     ctx.beginPath();
-    ctx.moveTo(0, index * 10);
-    if (isEven(Math.round(Math.random() * 10))) {
-      //0 to 10, 20 to 30, 40 to 50, 60 to 70, 80 to 90
+    const randomNumber = Math.round(Math.random() * 10);
+    ctx.fillText(`${isEven(randomNumber) ? 1 : 0}`, 0, index * 10 + 12);
+    if (isEven(randomNumber)) {
       for (let i = 0; i < width; i += 20) {
-        ctx.moveTo(i, index * 10);
-        ctx.lineTo(i + 10, index * 10);
+        ctx.moveTo(i + 10, index * 10 + 10);
+        ctx.lineTo(i + 20, index * 10 + 10);
       }
     } else {
-      //10 to 20, 30 to 40, 50 to 60, 70 to 80, 90 to 100
       for (let i = 10; i < width; i += 20) {
-        ctx.moveTo(i, index * 10);
-        ctx.lineTo(i + 10, index * 10);
+        ctx.moveTo(i + 10, index * 10 + 10);
+        ctx.lineTo(i + 20, index * 10 + 10);
       }
     }
     ctx.stroke();
@@ -44,18 +43,17 @@ function drawPattern() {
   for (let index = 0; index < height / 2; index += 1) {
     ctx.strokeStyle = "hsla(" + Math.round(index * 1.5) + ", 100%, 50%, 1.0)";
     ctx.beginPath();
-    ctx.moveTo(index * 10, 0);
-    if (isEven(Math.round(Math.random() * 10))) {
-      //0 to 5, 10 to 15, 20 to 25, 30 to 35, 40 to 45, 50 to 55
+    const randomNumber = Math.round(Math.random() * 10);
+    ctx.fillText(`${isEven(randomNumber) ? 1 : 0}`, index * 10 + 8, 8);
+    if (isEven(randomNumber)) {
       for (let i = 0; i < height; i += 20) {
-        ctx.moveTo(index * 10, i);
-        ctx.lineTo(index * 10, i + 10);
+        ctx.moveTo(index * 10 + 10, i + 10);
+        ctx.lineTo(index * 10 + 10, i + 20);
       }
     } else {
-      //5 to 10, 15 to 20, 25 to 30, 35 to 40, 45 to 50, 55 to 60
       for (let i = 10; i < height; i += 20) {
-        ctx.moveTo(index * 10, i);
-        ctx.lineTo(index * 10, i + 10);
+        ctx.moveTo(index * 10 + 10, i + 10);
+        ctx.lineTo(index * 10 + 10, i + 20);
       }
     }
     ctx.stroke();
