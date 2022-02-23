@@ -24,6 +24,7 @@ Options to:
 * Stroke color 
   * Rainbow
   * User chosen (potentially color wheel)
+  * Random
 
 * Background color
   * User chosen (potentially color wheel)
