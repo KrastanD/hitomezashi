@@ -10,26 +10,25 @@
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
-
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="icon.png" />
-    <link rel="manifest" href="site.webmanifest" />
     <meta name="theme-color" content="#fafafa" />
     <style>
       html,
       body {
         overflow: hidden;
         margin: 0;
+        background-color: black;
       }
     </style>
   </head>
 
-  <body onresize="resizeCanvas()">
+  <body>
     <!-- Add your site or application content here -->
     <canvas id="myCanvas"
       >Your browser does not support the canvas tag.
     </canvas>
   </body>
-  <script src="index.js"></script>
+  <script
+    data-main="build/index"
+    src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.min.js"
+  ></script>
 </html>
