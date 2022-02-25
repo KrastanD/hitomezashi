@@ -29,3 +29,4 @@ Options to:
 * Background color
   * User chosen (potentially color wheel)
 
+* URL params to configure page and vice versa
