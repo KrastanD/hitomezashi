@@ -3,9 +3,18 @@ export interface Coordinate {
   y: number;
 }
 
+export enum Sequence {
+  Binary = "binary",
+  DecimalParity = "decimalParity", //odds evens
+  DecimalToBinary = "decimalToBinary", //convert decimal to binary
+  AlphabetParity = "alphabetParity", //vowels consonants
+  AlphabetToBinary = "alphabetToBinary", //convert letter to binary
+  Random = "random",
+}
+
 export type GetBitProps = {
-  isSequenceRandom: boolean;
-  sequence: number[];
+  sequence?: number[];
+  sequenceType: Sequence;
   index: number;
 };
 
@@ -16,8 +25,8 @@ export type DrawPatternProps = {
 
 export type SequenceOptions = {
   isSequenceVisible: boolean;
-  isSequenceRandom: boolean;
-  sequence: number[];
+  sequence: string;
+  sequenceType: Sequence;
 };
 
 export type StrokeOptions = {

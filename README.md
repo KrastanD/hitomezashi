@@ -19,7 +19,7 @@ Options to:
         * Converted to binary
       * String sequence
         * Vowels/consonants
-        * Converted from ascii
+        * Converted from unicode
             
 * Stroke color 
   * Rainbow
@@ -30,3 +30,4 @@ Options to:
   * User chosen (potentially color wheel)
 
 * URL params to configure page and vice versa
+* Repeat/don't repeat sequence
