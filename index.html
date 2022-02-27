@@ -11,21 +11,26 @@
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
     <meta name="theme-color" content="#fafafa" />
-    <style>
-      html,
-      body {
-        overflow: hidden;
-        margin: 0;
-        background-color: black;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <!-- Add your site or application content here -->
-    <canvas id="myCanvas"
-      >Your browser does not support the canvas tag.
-    </canvas>
+    <div>
+      <div class="sidebar" id="mySidebar">
+        <span id="sidebarCloseButton" class="closebtn">&times;</span>
+      </div>
+      <div class="canvas-container">
+        <span
+          id="sidebarOpenButton"
+          class="openBtn"
+          style="font-size: 3vw; cursor: pointer; color: white"
+          >⚙️</span
+        >
+        <canvas id="myCanvas"
+          >Your browser does not support the canvas tag.
+        </canvas>
+      </div>
+    </div>
   </body>
   <script
     data-main="build/index"

@@ -9,23 +9,33 @@ import {
 let width: number,
   height: number,
   ctx: CanvasRenderingContext2D,
-  canvas: HTMLCanvasElement;
+  canvas: HTMLCanvasElement,
+  sidebar: HTMLDivElement,
+  sidebarOpenButton: HTMLSpanElement,
+  sidebarCloseButton: HTMLSpanElement;
 
 const DISTANCE_APART = 10;
 (function () {
   canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
   ctx = canvas.getContext("2d");
+  sidebar = document.getElementById("mySidebar") as HTMLDivElement;
+  sidebarOpenButton = document.getElementById(
+    "sidebarOpenButton"
+  ) as HTMLSpanElement;
+  sidebarCloseButton = document.getElementById(
+    "sidebarCloseButton"
+  ) as HTMLSpanElement;
 
-  canvas.width =
-    window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth;
-  canvas.height =
+  width =
+    (window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth) - sidebar.clientWidth;
+  height =
     window.innerHeight ||
     document.documentElement.clientHeight ||
     document.body.clientHeight;
-  width = canvas.width;
-  height = canvas.height;
+  canvas.width = width;
+  canvas.height = height;
 })();
 
 drawPattern();
@@ -170,6 +180,16 @@ function drawVerticalLine({ x, y }: Coordinate, distance: number) {
   ctx.moveTo(x, y);
   ctx.lineTo(x, y + distance);
 }
+
+sidebarOpenButton.onclick = function openNav() {
+  document.getElementById("mySidebar").style.width = "20vw";
+  canvas.style.paddingLeft = "20vw";
+};
+
+sidebarCloseButton.onclick = function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  canvas.style.paddingLeft = "0";
+};
 
 document.body.onresize = function resizeCanvas() {
   canvas.width =
