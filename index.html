@@ -18,6 +18,53 @@
     <div>
       <div class="sidebar" id="mySidebar">
         <span id="sidebarCloseButton" class="closebtn">&times;</span>
+        <form name="myForm">
+          <label class="sidebar-label">Horizontal Sequence</label>
+          <br />
+          <select
+            name="horizontalSelect"
+            id="horizontalSelect"
+            class="sidebar-select"
+          >
+            <option value="0" selected>Random</option>
+            <option value="1">Binary</option>
+            <option value="2">Odds/Evens</option>
+            <option value="3">Decimal converted to Binary</option>
+            <option value="4">Vowels/Consonants</option>
+            <option value="5">Alphabet converted to Binary</option>
+          </select>
+          <br />
+          <input
+            class="sidebar-input"
+            type="text"
+            name="horizontalSequence"
+            placeholder="Enter sequence..."
+            disabled
+          />
+          <br />
+          <label class="sidebar-label">Vertical Sequence</label>
+          <br />
+          <select
+            name="verticalSelect"
+            id="verticalSelect"
+            class="sidebar-select"
+          >
+            <option value="0" selected>Random</option>
+            <option value="1">Binary</option>
+            <option value="2">Odds/Evens</option>
+            <option value="3">Decimal converted to Binary</option>
+            <option value="4">Vowels/Consonants</option>
+            <option value="5">Alphabet converted to Binary</option>
+          </select>
+          <br />
+          <input
+            class="sidebar-input"
+            type="text"
+            name="verticalSequence"
+            placeholder="Enter sequence..."
+            disabled
+          />
+        </form>
       </div>
       <div class="canvas-container">
         <span

@@ -1,10 +1,18 @@
 import {
-  Coordinate,
   DrawPatternProps,
   GetBitProps,
   Sequence,
   StrokeOptions,
 } from "./types";
+import {
+  charToBinary,
+  decimalToBinary,
+  drawHorizontalLine,
+  drawVerticalLine,
+  isColor,
+  isEven,
+  isVowel,
+} from "./utils";
 
 let width: number,
   height: number,
@@ -12,9 +20,15 @@ let width: number,
   canvas: HTMLCanvasElement,
   sidebar: HTMLDivElement,
   sidebarOpenButton: HTMLSpanElement,
-  sidebarCloseButton: HTMLSpanElement;
+  sidebarCloseButton: HTMLSpanElement,
+  sidebarHorizontalSeqInput: HTMLInputElement,
+  sidebarVerticalSeqInput: HTMLInputElement,
+  sidebarHorizontalSeqSelect: HTMLSelectElement,
+  sidebarVerticalSeqSelect: HTMLSelectElement,
+  horizontalSequenceType: number,
+  verticalSequenceType: number;
 
-const DISTANCE_APART = 10;
+const DISTANCE_APART = 15;
 (function () {
   canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
   ctx = canvas.getContext("2d");
@@ -25,6 +39,21 @@ const DISTANCE_APART = 10;
   sidebarCloseButton = document.getElementById(
     "sidebarCloseButton"
   ) as HTMLSpanElement;
+  sidebarHorizontalSeqInput = document.forms[0][
+    "horizontalSequence"
+  ] as HTMLInputElement;
+  sidebarVerticalSeqInput = document.forms[0][
+    "verticalSequence"
+  ] as HTMLInputElement;
+  sidebarHorizontalSeqSelect = document.forms[0][
+    "horizontalSelect"
+  ] as HTMLSelectElement;
+  sidebarVerticalSeqSelect = document.forms[0][
+    "verticalSelect"
+  ] as HTMLSelectElement;
+
+  horizontalSequenceType = Number(sidebarHorizontalSeqSelect.value);
+  verticalSequenceType = Number(sidebarVerticalSeqSelect.value);
 
   width =
     (window.innerWidth ||
@@ -38,6 +67,17 @@ const DISTANCE_APART = 10;
   canvas.height = height;
 })();
 
+const defaultDrawPatternProps: DrawPatternProps = {
+  sequenceOptions: {
+    isSequenceVisible: true,
+    sequenceType: Sequence.Random,
+    sequence: "",
+  },
+  strokeOptions: { isRainbow: true, isRandom: false, color: "" },
+};
+let horizontalProps = { ...defaultDrawPatternProps };
+let verticalProps = { ...defaultDrawPatternProps };
+
 drawPattern();
 
 function drawPattern() {
@@ -46,28 +86,15 @@ function drawPattern() {
   document.body.style.backgroundColor = "black";
   ctx.font = "8px Arial";
 
-  drawHorizontalPattern({
-    sequenceOptions: {
-      isSequenceVisible: false,
-      sequenceType: Sequence.Random,
-      sequence: "",
-    },
-    strokeOptions: { isRainbow: true, isRandom: false, color: "" },
-  });
-  drawVerticalPattern({
-    sequenceOptions: {
-      isSequenceVisible: false,
-      sequenceType: Sequence.Random,
-      sequence: "",
-    },
-    strokeOptions: { isRainbow: true, isRandom: false, color: "" },
-  });
+  drawHorizontalPattern(horizontalProps);
+  drawVerticalPattern(verticalProps);
 }
 
 function drawHorizontalPattern({
   sequenceOptions: { isSequenceVisible, sequence, sequenceType },
   strokeOptions: { isRainbow, isRandom, color },
 }: DrawPatternProps) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   const sequenceArray = prepareSequence(sequence, sequenceType);
   for (let index = DISTANCE_APART; index < height; index += DISTANCE_APART) {
     setStrokeStyle({ isRainbow, isRandom, color }, index);
@@ -84,7 +111,7 @@ function drawHorizontalPattern({
       startingIndex += DISTANCE_APART;
     }
     for (let i = startingIndex; i < width; i += 2 * DISTANCE_APART) {
-      drawHorizontalLine({ x: i, y: index }, DISTANCE_APART);
+      drawHorizontalLine({ x: i, y: index }, DISTANCE_APART, ctx);
     }
     ctx.stroke();
   }
@@ -109,7 +136,7 @@ function drawVerticalPattern({
       startingIndex += DISTANCE_APART;
     }
     for (let i = startingIndex; i < height; i += 2 * DISTANCE_APART) {
-      drawVerticalLine({ x: index, y: i }, DISTANCE_APART);
+      drawVerticalLine({ x: index, y: i }, DISTANCE_APART, ctx);
     }
     ctx.stroke();
   }
@@ -171,15 +198,6 @@ function prepareSequence(sequence: string, sequenceType: Sequence): number[] {
       return sequenceArray.map((char) => Number(char));
   }
 }
-function drawHorizontalLine({ x, y }: Coordinate, distance: number) {
-  ctx.moveTo(x, y);
-  ctx.lineTo(x + distance, y);
-}
-
-function drawVerticalLine({ x, y }: Coordinate, distance: number) {
-  ctx.moveTo(x, y);
-  ctx.lineTo(x, y + distance);
-}
 
 sidebarOpenButton.onclick = function openNav() {
   document.getElementById("mySidebar").style.width = "20vw";
@@ -189,6 +207,114 @@ sidebarOpenButton.onclick = function openNav() {
 sidebarCloseButton.onclick = function closeNav() {
   document.getElementById("mySidebar").style.width = "0";
   canvas.style.paddingLeft = "0";
+};
+
+sidebarVerticalSeqInput.oninput = function (event) {
+  const { value } = event.target as HTMLInputElement;
+
+  switch (verticalSequenceType) {
+    case Sequence.Binary:
+      sidebarVerticalSeqInput.title = "1s and 0s only";
+      sidebarVerticalSeqInput.pattern = "^[01]*$";
+      break;
+    case Sequence.DecimalToBinary:
+    case Sequence.DecimalParity:
+      sidebarVerticalSeqInput.title = "0-9 only";
+      sidebarVerticalSeqInput.pattern = "^[0-9]*$";
+      break;
+    case Sequence.AlphabetParity:
+    case Sequence.AlphabetToBinary:
+      sidebarVerticalSeqInput.title = "Letters only";
+      sidebarVerticalSeqInput.pattern = "^[a-zA-Z]*$";
+      break;
+  }
+  if (sidebarVerticalSeqInput.reportValidity()) {
+    horizontalProps = {
+      ...horizontalProps,
+      sequenceOptions: {
+        isSequenceVisible: horizontalProps.sequenceOptions.isSequenceVisible,
+        sequence: value ? value : "1",
+        sequenceType: verticalSequenceType,
+      },
+    };
+    drawPattern();
+  }
+};
+
+sidebarHorizontalSeqInput.oninput = function (event) {
+  const { value } = event.target as HTMLInputElement;
+
+  switch (horizontalSequenceType) {
+    case Sequence.Binary:
+      sidebarHorizontalSeqInput.title = "1s and 0s only";
+      sidebarHorizontalSeqInput.pattern = "^[01]*$";
+      break;
+    case Sequence.DecimalToBinary:
+    case Sequence.DecimalParity:
+      sidebarHorizontalSeqInput.title = "0-9 only";
+      sidebarHorizontalSeqInput.pattern = "^[0-9]*$";
+      break;
+    case Sequence.AlphabetParity:
+    case Sequence.AlphabetToBinary:
+      sidebarHorizontalSeqInput.title = "Letters only";
+      sidebarHorizontalSeqInput.pattern = "^[a-zA-Z]*$";
+      break;
+  }
+  if (sidebarHorizontalSeqInput.reportValidity()) {
+    verticalProps = {
+      ...verticalProps,
+      sequenceOptions: {
+        isSequenceVisible: verticalProps.sequenceOptions.isSequenceVisible,
+        sequence: value ? value : "1",
+        sequenceType: horizontalSequenceType,
+      },
+    };
+    drawPattern();
+  }
+};
+
+sidebarHorizontalSeqSelect.oninput = function (event) {
+  const { value } = event.target as HTMLSelectElement;
+  const sequenceType = Number(value) as Sequence;
+  horizontalSequenceType = sequenceType;
+  if (sequenceType === Sequence.Random) {
+    sidebarHorizontalSeqInput.value = "";
+    sidebarHorizontalSeqInput.disabled = true;
+    verticalProps = {
+      ...verticalProps,
+      sequenceOptions: {
+        isSequenceVisible: verticalProps.sequenceOptions.isSequenceVisible,
+        sequence: "",
+        sequenceType: Sequence.Random,
+      },
+    };
+    drawPattern();
+  } else {
+    sidebarHorizontalSeqInput.disabled = false;
+  }
+};
+
+sidebarVerticalSeqSelect.oninput = function (event) {
+  const { value } = event.target as HTMLSelectElement;
+  const sequenceType = Number(value) as Sequence;
+  verticalSequenceType = sequenceType;
+  if (sequenceType === Sequence.Random) {
+    sidebarVerticalSeqInput.value = "";
+    sidebarVerticalSeqInput.disabled = true;
+    horizontalProps = {
+      ...horizontalProps,
+      sequenceOptions: {
+        isSequenceVisible: horizontalProps.sequenceOptions.isSequenceVisible,
+        sequence: "",
+        sequenceType: Sequence.Random,
+      },
+    };
+    drawPattern();
+  } else {
+    sidebarVerticalSeqInput.disabled = false;
+  }
+  sidebarVerticalSeqInput.value = "";
+  drawPattern();
 };
 
 document.body.onresize = function resizeCanvas() {
@@ -205,31 +331,6 @@ document.body.onresize = function resizeCanvas() {
   height = canvas.height;
   drawPattern();
 };
-
-function isEven(num: number) {
-  return num % 2 === 0;
-}
-
-function decimalToBinary(num: number): number {
-  return Number((num >>> 0).toString(2));
-}
-
-function charToBinary(char: string): number {
-  return decimalToBinary(char.charCodeAt(0));
-}
-
-function isColor(strColor: string) {
-  const s = new Option().style;
-  s.color = strColor;
-  return s.color !== "";
-}
-
-function isVowel(char: string) {
-  //return whether a character is a consonant
-  const vowels = ["a", "e", "i", "o", "u"];
-  const ans = vowels.indexOf(char.toLowerCase()) > -1;
-  return ans;
-}
 
 function setStrokeStyle(
   { isRainbow, isRandom, color }: StrokeOptions,

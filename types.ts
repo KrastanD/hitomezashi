@@ -4,12 +4,12 @@ export interface Coordinate {
 }
 
 export enum Sequence {
-  Binary = "binary",
-  DecimalParity = "decimalParity", //odds evens
-  DecimalToBinary = "decimalToBinary", //convert decimal to binary
-  AlphabetParity = "alphabetParity", //vowels consonants
-  AlphabetToBinary = "alphabetToBinary", //convert letter to binary
-  Random = "random",
+  Random,
+  Binary,
+  DecimalParity, //odds evens
+  DecimalToBinary, //convert decimal to binary
+  AlphabetParity, //vowels consonants
+  AlphabetToBinary, //convert letter to binary
 }
 
 export type GetBitProps = {

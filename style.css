@@ -15,14 +15,14 @@ body {
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+  padding-top: 3vw;
+  white-space: nowrap;
 }
 .sidebar .closebtn {
   position: absolute;
   top: 0;
   right: 1vw;
   font-size: 2vw;
-  /* margin-left: 50px; */
 }
 .sidebar span {
   padding: 8px 8px 8px 8px;
@@ -44,4 +44,44 @@ body {
 }
 .canvas-container canvas {
   transition: 0.5s;
+}
+
+.sidebar-label {
+  color: white;
+  font-size: 1.5vw;
+  padding: 0.5vw;
+  transition-delay: 500ms;
+}
+
+.sidebar-input {
+  width: 19vw;
+  height: 2vw;
+  margin: 0.5vw;
+  font-size: 1vw;
+}
+
+.sidebar-input:invalid {
+  border-color: red;
+}
+
+.sidebar-input:focus:invalid {
+  outline-color: red;
+}
+
+.sidebar-select {
+  width: 19vw;
+  height: 2vw;
+  margin: 0.5vw;
+  font-size: 1vw;
+}
+
+.sidebar option {
+  font-size: 1vw;
+}
+
+input,
+select {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
