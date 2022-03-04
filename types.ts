@@ -11,7 +11,6 @@ export enum Sequence {
   AlphabetParity, //vowels consonants
   AlphabetToBinary, //convert letter to binary
 }
-
 export type GetBitProps = {
   sequence?: number[];
   sequenceType: Sequence;
@@ -30,7 +29,12 @@ export type SequenceOptions = {
 };
 
 export type StrokeOptions = {
-  isRainbow: boolean;
-  isRandom: boolean;
-  color: string;
+  stroke: Stroke;
+  color?: string;
 };
+
+export enum Stroke {
+  Rainbow,
+  Random,
+  Custom,
+}

@@ -2,6 +2,7 @@ import {
   DrawPatternProps,
   GetBitProps,
   Sequence,
+  Stroke,
   StrokeOptions,
 } from "./types";
 import {
@@ -26,7 +27,9 @@ let width: number,
   sidebarHorizontalSeqSelect: HTMLSelectElement,
   sidebarVerticalSeqSelect: HTMLSelectElement,
   horizontalSequenceType: number,
-  verticalSequenceType: number;
+  verticalSequenceType: number,
+  horizontalCheckbox: HTMLInputElement,
+  verticalCheckbox: HTMLInputElement;
 
 const DISTANCE_APART = 15;
 (function () {
@@ -51,6 +54,10 @@ const DISTANCE_APART = 15;
   sidebarVerticalSeqSelect = document.forms[0][
     "verticalSelect"
   ] as HTMLSelectElement;
+  horizontalCheckbox = document.forms[0][
+    "horizontalCheckbox"
+  ] as HTMLInputElement;
+  verticalCheckbox = document.forms[0]["verticalCheckbox"] as HTMLInputElement;
 
   horizontalSequenceType = Number(sidebarHorizontalSeqSelect.value);
   verticalSequenceType = Number(sidebarVerticalSeqSelect.value);
@@ -73,7 +80,7 @@ const defaultDrawPatternProps: DrawPatternProps = {
     sequenceType: Sequence.Random,
     sequence: "",
   },
-  strokeOptions: { isRainbow: true, isRandom: false, color: "" },
+  strokeOptions: { stroke: Stroke.Rainbow },
 };
 let horizontalProps = { ...defaultDrawPatternProps };
 let verticalProps = { ...defaultDrawPatternProps };
@@ -92,12 +99,12 @@ function drawPattern() {
 
 function drawHorizontalPattern({
   sequenceOptions: { isSequenceVisible, sequence, sequenceType },
-  strokeOptions: { isRainbow, isRandom, color },
+  strokeOptions: { stroke, color },
 }: DrawPatternProps) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const sequenceArray = prepareSequence(sequence, sequenceType);
   for (let index = DISTANCE_APART; index < height; index += DISTANCE_APART) {
-    setStrokeStyle({ isRainbow, isRandom, color }, index);
+    setStrokeStyle({ stroke, color }, index);
     ctx.beginPath();
 
     const bit = getBit({
@@ -119,11 +126,11 @@ function drawHorizontalPattern({
 
 function drawVerticalPattern({
   sequenceOptions: { isSequenceVisible, sequence, sequenceType },
-  strokeOptions: { isRainbow, isRandom, color },
+  strokeOptions: { stroke, color },
 }: DrawPatternProps) {
   const sequenceArray = prepareSequence(sequence, sequenceType);
   for (let index = DISTANCE_APART; index < width; index += DISTANCE_APART) {
-    setStrokeStyle({ isRainbow, isRandom, color }, index);
+    setStrokeStyle({ stroke, color }, index);
     ctx.beginPath();
     const bit = getBit({
       sequence: sequenceArray,
@@ -317,6 +324,32 @@ sidebarVerticalSeqSelect.oninput = function (event) {
   drawPattern();
 };
 
+horizontalCheckbox.oninput = function (event) {
+  const { checked } = event.target as HTMLInputElement;
+  verticalProps = {
+    ...verticalProps,
+    sequenceOptions: {
+      isSequenceVisible: checked,
+      sequence: verticalProps.sequenceOptions.sequence,
+      sequenceType: verticalProps.sequenceOptions.sequenceType,
+    },
+  };
+  drawPattern();
+};
+
+verticalCheckbox.oninput = function (event) {
+  const { checked } = event.target as HTMLInputElement;
+  horizontalProps = {
+    ...horizontalProps,
+    sequenceOptions: {
+      isSequenceVisible: checked,
+      sequence: horizontalProps.sequenceOptions.sequence,
+      sequenceType: horizontalProps.sequenceOptions.sequenceType,
+    },
+  };
+  drawPattern();
+};
+
 document.body.onresize = function resizeCanvas() {
   canvas.width =
     window.innerWidth ||
@@ -332,19 +365,18 @@ document.body.onresize = function resizeCanvas() {
   drawPattern();
 };
 
-function setStrokeStyle(
-  { isRainbow, isRandom, color }: StrokeOptions,
-  index: number
-) {
-  if (isRainbow) {
-    ctx.strokeStyle = "hsla(" + Math.round(index / 1.7) + ", 100%, 50%, 1.0)";
-  } else if (isRandom) {
-    ctx.strokeStyle = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-  } else {
-    if (isColor(color)) {
-      ctx.strokeStyle = color;
-    } else {
-      ctx.strokeStyle = "white";
-    }
+function setStrokeStyle({ stroke, color }: StrokeOptions, index: number) {
+  switch (stroke) {
+    case Stroke.Rainbow:
+      ctx.strokeStyle = "hsla(" + Math.round(index / 1.7) + ", 100%, 50%, 1.0)";
+      break;
+    case Stroke.Random:
+      ctx.strokeStyle = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+      break;
+    case Stroke.Custom:
+      if (color && isColor(color)) {
+        ctx.strokeStyle = color;
+      }
+      break;
   }
 }

@@ -79,6 +79,19 @@ body {
   font-size: 1vw;
 }
 
+.sidebar-checkbox-label {
+  color: white;
+  font-size: 1.2vw;
+  margin-left: 0.5vw;
+}
+
+.sidebar-checkbox {
+  margin: 0;
+  margin-left: 0.5vw;
+  width: 1.2vw;
+  height: 1.2vw;
+}
+
 input,
 select {
   -webkit-box-sizing: border-box;

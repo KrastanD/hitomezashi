@@ -19,6 +19,7 @@
       <div class="sidebar" id="mySidebar">
         <span id="sidebarCloseButton" class="closebtn">&times;</span>
         <form name="myForm">
+          <hr />
           <label class="sidebar-label">Horizontal Sequence</label>
           <br />
           <select
@@ -42,6 +43,18 @@
             disabled
           />
           <br />
+          <input
+            class="sidebar-checkbox"
+            type="checkbox"
+            name="horizontalCheckbox"
+            id="horizontalCheckbox"
+            checked
+          />
+          <label class="sidebar-checkbox-label" for="horizontalCheckbox">
+            Show sequence
+          </label>
+          <br />
+          <hr />
           <label class="sidebar-label">Vertical Sequence</label>
           <br />
           <select
@@ -64,6 +77,18 @@
             placeholder="Enter sequence..."
             disabled
           />
+          <br />
+          <input
+            class="sidebar-checkbox"
+            type="checkbox"
+            name="verticalCheckbox"
+            id="verticalCheckbox"
+            checked
+          />
+          <label class="sidebar-checkbox-label" for="verticalCheckbox">
+            Show sequence
+          </label>
+          <br />
         </form>
       </div>
       <div class="canvas-container">
