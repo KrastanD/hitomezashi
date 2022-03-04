@@ -59,6 +59,9 @@ const DISTANCE_APART = 15;
   ] as HTMLInputElement;
   verticalCheckbox = document.forms[0]["verticalCheckbox"] as HTMLInputElement;
 
+  sidebarHorizontalSeqInput.style.display = "none";
+  sidebarVerticalSeqInput.style.display = "none";
+
   horizontalSequenceType = Number(sidebarHorizontalSeqSelect.value);
   verticalSequenceType = Number(sidebarVerticalSeqSelect.value);
 
@@ -286,7 +289,7 @@ sidebarHorizontalSeqSelect.oninput = function (event) {
   horizontalSequenceType = sequenceType;
   if (sequenceType === Sequence.Random) {
     sidebarHorizontalSeqInput.value = "";
-    sidebarHorizontalSeqInput.disabled = true;
+    sidebarHorizontalSeqInput.style.display = "none";
     verticalProps = {
       ...verticalProps,
       sequenceOptions: {
@@ -297,7 +300,7 @@ sidebarHorizontalSeqSelect.oninput = function (event) {
     };
     drawPattern();
   } else {
-    sidebarHorizontalSeqInput.disabled = false;
+    sidebarHorizontalSeqInput.style.display = "block";
   }
 };
 
@@ -307,7 +310,7 @@ sidebarVerticalSeqSelect.oninput = function (event) {
   verticalSequenceType = sequenceType;
   if (sequenceType === Sequence.Random) {
     sidebarVerticalSeqInput.value = "";
-    sidebarVerticalSeqInput.disabled = true;
+    sidebarVerticalSeqInput.style.display = "none";
     horizontalProps = {
       ...horizontalProps,
       sequenceOptions: {
@@ -318,7 +321,7 @@ sidebarVerticalSeqSelect.oninput = function (event) {
     };
     drawPattern();
   } else {
-    sidebarVerticalSeqInput.disabled = false;
+    sidebarVerticalSeqInput.style.display = "block";
   }
   sidebarVerticalSeqInput.value = "";
   drawPattern();
