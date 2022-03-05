@@ -227,13 +227,13 @@ function prepareSequence(sequence: string, sequenceType: Sequence): number[] {
 }
 
 sidebarOpenButton.onclick = function openNav() {
-  document.getElementById("mySidebar").style.width = "20vw";
-  canvas.style.paddingLeft = "20vw";
+  document.getElementById("mySidebar").classList.add("sidebar-open");
+  canvas.classList.add("canvas-sidebar-open");
 };
 
 sidebarCloseButton.onclick = function closeNav() {
-  document.getElementById("mySidebar").style.width = "0";
-  canvas.style.paddingLeft = "0";
+  document.getElementById("mySidebar").classList.remove("sidebar-open");
+  canvas.classList.remove("canvas-sidebar-open");
 };
 
 sidebarVerticalSeqInput.oninput = function (event) {
