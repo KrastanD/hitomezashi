@@ -31,3 +31,4 @@ Options to:
 
 * URL params to configure page and vice versa
 * Repeat/don't repeat sequence
+* Save canvas as an image
