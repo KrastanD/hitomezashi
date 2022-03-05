@@ -18,10 +18,9 @@
     <div>
       <div class="sidebar" id="mySidebar">
         <span id="sidebarCloseButton" class="closebtn">&times;</span>
-        <form name="myForm">
+        <form name="myForm" class="sidebar-form">
           <hr />
           <label class="sidebar-label">Horizontal Sequence</label>
-          <br />
           <select
             name="horizontalSelect"
             id="horizontalSelect"
@@ -34,28 +33,41 @@
             <option value="4">Vowels/Consonants</option>
             <option value="5">Alphabet converted to Binary</option>
           </select>
-          <br />
           <input
             class="sidebar-input"
             type="text"
             name="horizontalSequence"
             placeholder="Enter sequence..."
           />
-          <br />
+          <select
+            name="horizontalStrokeSelect"
+            id="horizontalStrokeSelect"
+            class="sidebar-select"
+          >
+            <option value="0" selected>Rainbow</option>
+            <option value="1">Random</option>
+            <option value="2">Custom</option>
+          </select>
           <input
-            class="sidebar-checkbox"
-            type="checkbox"
-            name="horizontalCheckbox"
-            id="horizontalCheckbox"
-            checked
+            class="sidebar-input"
+            type="text"
+            name="horizontalStrokeInput"
+            placeholder="Enter color..."
           />
-          <label class="sidebar-checkbox-label" for="horizontalCheckbox">
-            Show sequence
-          </label>
-          <br />
+          <div>
+            <input
+              class="sidebar-checkbox"
+              type="checkbox"
+              name="horizontalCheckbox"
+              id="horizontalCheckbox"
+              checked
+            />
+            <label class="sidebar-checkbox-label" for="horizontalCheckbox">
+              Show sequence
+            </label>
+          </div>
           <hr />
           <label class="sidebar-label">Vertical Sequence</label>
-          <br />
           <select
             name="verticalSelect"
             id="verticalSelect"
@@ -68,25 +80,39 @@
             <option value="4">Vowels/Consonants</option>
             <option value="5">Alphabet converted to Binary</option>
           </select>
-          <br />
           <input
             class="sidebar-input"
             type="text"
             name="verticalSequence"
             placeholder="Enter sequence..."
           />
-          <br />
+          <select
+            name="verticalStrokeSelect"
+            id="verticalStrokeSelect"
+            class="sidebar-select"
+          >
+            <option value="0" selected>Rainbow</option>
+            <option value="1">Random</option>
+            <option value="2">Custom</option>
+          </select>
           <input
-            class="sidebar-checkbox"
-            type="checkbox"
-            name="verticalCheckbox"
-            id="verticalCheckbox"
-            checked
+            class="sidebar-input"
+            type="text"
+            name="verticalStrokeInput"
+            placeholder="Enter color..."
           />
-          <label class="sidebar-checkbox-label" for="verticalCheckbox">
-            Show sequence
-          </label>
-          <br />
+          <div>
+            <input
+              class="sidebar-checkbox"
+              type="checkbox"
+              name="verticalCheckbox"
+              id="verticalCheckbox"
+              checked
+            />
+            <label class="sidebar-checkbox-label" for="verticalCheckbox">
+              Show sequence
+            </label>
+          </div>
         </form>
       </div>
       <div class="canvas-container">

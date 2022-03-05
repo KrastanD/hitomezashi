@@ -26,10 +26,16 @@ let width: number,
   sidebarVerticalSeqInput: HTMLInputElement,
   sidebarHorizontalSeqSelect: HTMLSelectElement,
   sidebarVerticalSeqSelect: HTMLSelectElement,
-  horizontalSequenceType: number,
-  verticalSequenceType: number,
+  horizontalSequenceType: Sequence,
+  verticalSequenceType: Sequence,
   horizontalCheckbox: HTMLInputElement,
-  verticalCheckbox: HTMLInputElement;
+  verticalCheckbox: HTMLInputElement,
+  verticalStrokeSelect: HTMLSelectElement,
+  verticalStrokeInput: HTMLInputElement,
+  verticalStrokeType: Stroke,
+  horizontalStrokeSelect: HTMLSelectElement,
+  horizontalStrokeInput: HTMLInputElement,
+  horizontalStrokeType: Stroke;
 
 const DISTANCE_APART = 15;
 (function () {
@@ -58,12 +64,23 @@ const DISTANCE_APART = 15;
     "horizontalCheckbox"
   ] as HTMLInputElement;
   verticalCheckbox = document.forms[0]["verticalCheckbox"] as HTMLInputElement;
-
-  sidebarHorizontalSeqInput.style.display = "none";
-  sidebarVerticalSeqInput.style.display = "none";
+  verticalStrokeSelect = document.forms[0][
+    "verticalStrokeSelect"
+  ] as HTMLSelectElement;
+  verticalStrokeInput = document.forms[0][
+    "verticalStrokeInput"
+  ] as HTMLInputElement;
+  horizontalStrokeSelect = document.forms[0][
+    "horizontalStrokeSelect"
+  ] as HTMLSelectElement;
+  horizontalStrokeInput = document.forms[0][
+    "horizontalStrokeInput"
+  ] as HTMLInputElement;
 
   horizontalSequenceType = Number(sidebarHorizontalSeqSelect.value);
   verticalSequenceType = Number(sidebarVerticalSeqSelect.value);
+  horizontalStrokeType = Number(horizontalStrokeSelect.value);
+  verticalStrokeType = Number(verticalStrokeSelect.value);
 
   width =
     (window.innerWidth ||
@@ -348,6 +365,76 @@ verticalCheckbox.oninput = function (event) {
       isSequenceVisible: checked,
       sequence: horizontalProps.sequenceOptions.sequence,
       sequenceType: horizontalProps.sequenceOptions.sequenceType,
+    },
+  };
+  drawPattern();
+};
+
+verticalStrokeInput.oninput = function (event) {
+  const { value } = event.target as HTMLInputElement;
+  if (isColor(value)) {
+    horizontalProps = {
+      ...horizontalProps,
+      strokeOptions: {
+        stroke: horizontalProps.strokeOptions.stroke,
+        color: value,
+      },
+    };
+    drawPattern();
+  }
+};
+
+verticalStrokeSelect.oninput = function (event) {
+  const { value } = event.target as HTMLSelectElement;
+  const strokeType = Number(value) as Stroke;
+  verticalStrokeType = strokeType;
+  if (strokeType === Stroke.Random || strokeType === Stroke.Rainbow) {
+    verticalStrokeInput.value = "";
+    verticalStrokeInput.style.display = "none";
+  } else {
+    verticalStrokeInput.style.display = "block";
+    verticalStrokeInput.title = "HTML color or hex code";
+  }
+  verticalStrokeInput.value = "";
+  horizontalProps = {
+    ...horizontalProps,
+    strokeOptions: {
+      stroke: strokeType,
+    },
+  };
+  drawPattern();
+};
+
+horizontalStrokeInput.oninput = function (event) {
+  const { value } = event.target as HTMLInputElement;
+  if (isColor(value)) {
+    verticalProps = {
+      ...verticalProps,
+      strokeOptions: {
+        stroke: verticalProps.strokeOptions.stroke,
+        color: value,
+      },
+    };
+    drawPattern();
+  }
+};
+
+horizontalStrokeSelect.oninput = function (event) {
+  const { value } = event.target as HTMLSelectElement;
+  const strokeType = Number(value) as Stroke;
+  horizontalStrokeType = strokeType;
+  if (strokeType === Stroke.Random || strokeType === Stroke.Rainbow) {
+    horizontalStrokeInput.value = "";
+    horizontalStrokeInput.style.display = "none";
+  } else {
+    horizontalStrokeInput.style.display = "block";
+    horizontalStrokeInput.title = "HTML color or hex code";
+  }
+  horizontalStrokeInput.value = "";
+  verticalProps = {
+    ...verticalProps,
+    strokeOptions: {
+      stroke: strokeType,
     },
   };
   drawPattern();
