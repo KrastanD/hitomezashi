@@ -6,8 +6,6 @@ Currently:
 
 Two random sequences with rainbow stroke and black background
 
-Future:
-
 Options to:
 
 * Choose each sequence individually
@@ -23,8 +21,10 @@ Options to:
             
 * Stroke color 
   * Rainbow
-  * User chosen (potentially color wheel)
+  * User chosen 
   * Random
+
+Future:
 
 * Background color
   * User chosen (potentially color wheel)
