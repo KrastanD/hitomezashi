@@ -32,3 +32,4 @@ Future:
 * URL params to configure page and vice versa
 * Repeat/don't repeat sequence
 * Save canvas as an image
+* Show how user entered data maps to sequence
