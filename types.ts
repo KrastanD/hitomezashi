@@ -18,6 +18,7 @@ export type GetBitProps = {
 };
 
 export type DrawPatternProps = {
+  canvasOptions?: CanvasOptions;
   sequenceOptions?: SequenceOptions;
   strokeOptions?: StrokeOptions;
 };
@@ -33,6 +34,10 @@ export type StrokeOptions = {
   color?: string;
 };
 
+export type CanvasOptions = {
+  canvas: HTMLCanvasElement;
+  ctx: CanvasRenderingContext2D;
+};
 export enum Stroke {
   Rainbow,
   Random,
