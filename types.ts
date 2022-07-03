@@ -18,7 +18,6 @@ export type GetBitProps = {
 };
 
 export type DrawPatternProps = {
-  canvasOptions?: CanvasOptions;
   sequenceOptions?: SequenceOptions;
   strokeOptions?: StrokeOptions;
 };
