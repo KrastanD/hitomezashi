@@ -35,6 +35,7 @@ body {
   left: 1vw;
   bottom: 1vw;
   font-size: 3vw;
+  cursor: pointer;
 }
 .canvas-container {
   position: relative;

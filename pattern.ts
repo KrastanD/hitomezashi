@@ -1,6 +1,5 @@
 import { DISTANCE_APART } from "./constants";
 import {
-  CanvasOptions,
   DrawPatternProps,
   GetBitProps,
   Sequence,
@@ -17,23 +16,42 @@ import {
   isVowel,
 } from "./utils";
 
+const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
+const ctx = canvas.getContext("2d");
+
+let defaultProps: DrawPatternProps = {
+  sequenceOptions: {
+    isSequenceVisible: true,
+    sequenceType: Sequence.Random,
+    sequence: "",
+  },
+  strokeOptions: { stroke: Stroke.Rainbow },
+};
+let horizontalProps = { ...defaultProps };
+let verticalProps = { ...defaultProps };
+
 export function drawPattern(
-  canvasOptions: CanvasOptions,
-  horizontalProps: DrawPatternProps,
-  verticalProps: DrawPatternProps
+  newVerticalProps?: DrawPatternProps,
+  newHorizontalProps?: DrawPatternProps
 ) {
-  const { ctx } = canvasOptions;
   ctx.moveTo(0, 0);
   ctx.fillStyle = "white";
   document.body.style.backgroundColor = "black";
   ctx.font = "8px Arial";
 
-  drawHorizontalPattern(horizontalProps);
-  drawVerticalPattern(verticalProps);
+  if (newVerticalProps) {
+    verticalProps = newVerticalProps;
+  }
+
+  if (newHorizontalProps) {
+    horizontalProps = newHorizontalProps;
+  }
+
+  drawHorizontalPattern(verticalProps);
+  drawVerticalPattern(horizontalProps);
 }
 
 export function drawHorizontalPattern({
-  canvasOptions: { canvas, ctx },
   sequenceOptions: { isSequenceVisible, sequence, sequenceType },
   strokeOptions: { stroke, color },
 }: DrawPatternProps) {
@@ -44,7 +62,7 @@ export function drawHorizontalPattern({
     index < canvas.height;
     index += DISTANCE_APART
   ) {
-    setStrokeStyle({ canvas, ctx }, { stroke, color }, index);
+    setStrokeStyle({ stroke, color }, index);
     ctx.beginPath();
 
     const bit = getBit({
@@ -65,7 +83,6 @@ export function drawHorizontalPattern({
 }
 
 export function drawVerticalPattern({
-  canvasOptions: { canvas, ctx },
   sequenceOptions: { isSequenceVisible, sequence, sequenceType },
   strokeOptions: { stroke, color },
 }: DrawPatternProps) {
@@ -75,7 +92,7 @@ export function drawVerticalPattern({
     index < canvas.width;
     index += DISTANCE_APART
   ) {
-    setStrokeStyle({ canvas, ctx }, { stroke, color }, index);
+    setStrokeStyle({ stroke, color }, index);
     ctx.beginPath();
     const bit = getBit({
       sequence: sequenceArray,
@@ -151,11 +168,7 @@ function prepareSequence(sequence: string, sequenceType: Sequence): number[] {
   }
 }
 
-function setStrokeStyle(
-  { ctx }: CanvasOptions,
-  { stroke, color }: StrokeOptions,
-  index: number
-) {
+function setStrokeStyle({ stroke, color }: StrokeOptions, index: number) {
   switch (stroke) {
     case Stroke.Rainbow:
       ctx.strokeStyle = "hsla(" + Math.round(index / 1.7) + ", 100%, 50%, 1.0)";
