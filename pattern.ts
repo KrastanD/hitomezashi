@@ -62,7 +62,7 @@ export function drawHorizontalPattern({
     index < canvas.height;
     index += DISTANCE_APART
   ) {
-    setStrokeStyle({ stroke, color }, index);
+    setStrokeStyle({ stroke, color }, index, true);
     ctx.beginPath();
 
     const bit = getBit({
@@ -92,7 +92,7 @@ export function drawVerticalPattern({
     index < canvas.width;
     index += DISTANCE_APART
   ) {
-    setStrokeStyle({ stroke, color }, index);
+    setStrokeStyle({ stroke, color }, index, false);
     ctx.beginPath();
     const bit = getBit({
       sequence: sequenceArray,
@@ -168,10 +168,20 @@ function prepareSequence(sequence: string, sequenceType: Sequence): number[] {
   }
 }
 
-function setStrokeStyle({ stroke, color }: StrokeOptions, index: number) {
+function setStrokeStyle(
+  { stroke, color }: StrokeOptions,
+  index: number,
+  isHorizontal: boolean
+) {
   switch (stroke) {
     case Stroke.Rainbow:
-      ctx.strokeStyle = "hsla(" + Math.round(index / 1.7) + ", 100%, 50%, 1.0)";
+      let deg = 0;
+      if (isHorizontal) {
+        deg = ((index / canvas.height) * 360) / 1.2;
+      } else {
+        deg = ((index / canvas.width) * 360) / 1.2;
+      }
+      ctx.strokeStyle = `hsla(${deg}, 100%, 50%, 1.0)`;
       break;
     case Stroke.Random:
       ctx.strokeStyle = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
