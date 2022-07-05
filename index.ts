@@ -3,8 +3,6 @@ import "./sidebar";
 import "./horizontal";
 import "./vertical";
 
-resizeCanvas();
-
 function resizeCanvas() {
   canvas.width =
     window.innerWidth ||
@@ -15,7 +13,9 @@ function resizeCanvas() {
     document.documentElement.clientHeight ||
     document.body.clientHeight;
 
-  drawPattern();
+  drawPattern({});
 }
+
+resizeCanvas();
 
 document.body.onresize = resizeCanvas;

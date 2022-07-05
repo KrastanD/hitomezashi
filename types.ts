@@ -17,7 +17,7 @@ export type GetBitProps = {
   index: number;
 };
 
-export type DrawPatternProps = {
+export type PatternProps = {
   sequenceOptions?: SequenceOptions;
   strokeOptions?: StrokeOptions;
 };

@@ -1,27 +1,21 @@
 import { drawPattern } from "./pattern";
-import { DrawPatternProps, Sequence, Stroke } from "./types";
+import { PatternProps, Sequence, Stroke } from "./types";
 import { isColor } from "./utils";
 
-const sidebarVerticalSeqInput = document.forms[0][
-  "verticalSequence"
-] as HTMLInputElement;
+const sequenceInput = document.forms[0]["verticalSequence"] as HTMLInputElement;
 
-const sidebarVerticalSeqSelect = document.forms[0][
-  "verticalSelect"
-] as HTMLSelectElement;
+const sequenceSelect = document.forms[0]["verticalSelect"] as HTMLSelectElement;
 
-const verticalCheckbox = document.forms[0][
-  "verticalCheckbox"
-] as HTMLInputElement;
-const verticalStrokeSelect = document.forms[0][
+const checkbox = document.forms[0]["verticalCheckbox"] as HTMLInputElement;
+const strokeSelect = document.forms[0][
   "verticalStrokeSelect"
 ] as HTMLSelectElement;
-const verticalStrokeInput = document.forms[0][
+const strokeInput = document.forms[0][
   "verticalStrokeInput"
 ] as HTMLInputElement;
 
-let verticalSequenceType = Number(sidebarVerticalSeqSelect.value);
-let drawProps: DrawPatternProps = {
+let sequenceType = Number(sequenceSelect.value);
+let options: PatternProps = {
   sequenceOptions: {
     isSequenceVisible: true,
     sequenceType: Sequence.Random,
@@ -30,104 +24,103 @@ let drawProps: DrawPatternProps = {
   strokeOptions: { stroke: Stroke.Rainbow },
 };
 
-sidebarVerticalSeqInput.oninput = function (event) {
+sequenceInput.oninput = function (event) {
   const { value } = event.target as HTMLInputElement;
 
-  switch (verticalSequenceType) {
+  switch (sequenceType) {
     case Sequence.Binary:
-      sidebarVerticalSeqInput.title = "1s and 0s only";
-      sidebarVerticalSeqInput.pattern = "^[01]*$";
+      sequenceInput.title = "1s and 0s only";
+      sequenceInput.pattern = "^[01]*$";
       break;
     case Sequence.DecimalToBinary:
     case Sequence.DecimalParity:
-      sidebarVerticalSeqInput.title = "0-9 only";
-      sidebarVerticalSeqInput.pattern = "^[0-9]*$";
+      sequenceInput.title = "0-9 only";
+      sequenceInput.pattern = "^[0-9]*$";
       break;
     case Sequence.AlphabetParity:
     case Sequence.AlphabetToBinary:
-      sidebarVerticalSeqInput.title = "Letters only";
-      sidebarVerticalSeqInput.pattern = "^[a-zA-Z]*$";
+      sequenceInput.title = "Letters only";
+      sequenceInput.pattern = "^[a-zA-Z]*$";
       break;
   }
-  if (sidebarVerticalSeqInput.reportValidity()) {
-    drawProps = {
-      ...drawProps,
+  if (sequenceInput.reportValidity()) {
+    options = {
+      ...options,
       sequenceOptions: {
-        isSequenceVisible: drawProps.sequenceOptions.isSequenceVisible,
+        isSequenceVisible: options.sequenceOptions.isSequenceVisible,
         sequence: value ? value : "1",
-        sequenceType: verticalSequenceType,
+        sequenceType,
       },
     };
-    drawPattern(drawProps);
+    drawPattern({ verticalOptions: options });
   }
 };
 
-sidebarVerticalSeqSelect.oninput = function (event) {
+sequenceSelect.oninput = function (event) {
   const { value } = event.target as HTMLSelectElement;
-  const sequenceType = Number(value) as Sequence;
-  verticalSequenceType = sequenceType;
+  sequenceType = Number(value) as Sequence;
   if (sequenceType === Sequence.Random) {
-    sidebarVerticalSeqInput.value = "";
-    sidebarVerticalSeqInput.style.display = "none";
-    drawProps = {
-      ...drawProps,
+    sequenceInput.value = "";
+    sequenceInput.style.display = "none";
+    options = {
+      ...options,
       sequenceOptions: {
-        isSequenceVisible: drawProps.sequenceOptions.isSequenceVisible,
+        isSequenceVisible: options.sequenceOptions.isSequenceVisible,
         sequence: "",
         sequenceType: Sequence.Random,
       },
     };
-    drawPattern(drawProps);
+    drawPattern({ verticalOptions: options });
   } else {
-    sidebarVerticalSeqInput.style.display = "block";
+    sequenceInput.style.display = "block";
   }
-  sidebarVerticalSeqInput.value = "";
-  drawPattern(drawProps);
+  sequenceInput.value = "";
+  drawPattern({ verticalOptions: options });
 };
 
-verticalCheckbox.oninput = function (event) {
+checkbox.oninput = function (event) {
   const { checked } = event.target as HTMLInputElement;
-  drawProps = {
-    ...drawProps,
+  options = {
+    ...options,
     sequenceOptions: {
       isSequenceVisible: checked,
-      sequence: drawProps.sequenceOptions.sequence,
-      sequenceType: drawProps.sequenceOptions.sequenceType,
+      sequence: options.sequenceOptions.sequence,
+      sequenceType: options.sequenceOptions.sequenceType,
     },
   };
-  drawPattern(drawProps);
+  drawPattern({ verticalOptions: options });
 };
 
-verticalStrokeInput.oninput = function (event) {
+strokeInput.oninput = function (event) {
   const { value } = event.target as HTMLInputElement;
   if (isColor(value)) {
-    drawProps = {
-      ...drawProps,
+    options = {
+      ...options,
       strokeOptions: {
-        stroke: drawProps.strokeOptions.stroke,
+        stroke: options.strokeOptions.stroke,
         color: value,
       },
     };
-    drawPattern(drawProps);
+    drawPattern({ verticalOptions: options });
   }
 };
 
-verticalStrokeSelect.oninput = function (event) {
+strokeSelect.oninput = function (event) {
   const { value } = event.target as HTMLSelectElement;
   const strokeType = Number(value) as Stroke;
   if (strokeType === Stroke.Random || strokeType === Stroke.Rainbow) {
-    verticalStrokeInput.value = "";
-    verticalStrokeInput.style.display = "none";
+    strokeInput.value = "";
+    strokeInput.style.display = "none";
   } else {
-    verticalStrokeInput.style.display = "block";
-    verticalStrokeInput.title = "HTML color or hex code";
+    strokeInput.style.display = "block";
+    strokeInput.title = "HTML color or hex code";
   }
-  verticalStrokeInput.value = "";
-  drawProps = {
-    ...drawProps,
+  strokeInput.value = "";
+  options = {
+    ...options,
     strokeOptions: {
       stroke: strokeType,
     },
   };
-  drawPattern(drawProps);
+  drawPattern({ verticalOptions: options });
 };
