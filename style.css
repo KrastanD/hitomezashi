@@ -65,6 +65,13 @@ body {
   display: none;
 }
 
+.sidebar-background-input {
+  width: 19vw;
+  height: 2vw;
+  margin: 0.5vw;
+  font-size: 1vw;
+}
+
 .sidebar-input:invalid {
   border-color: red;
 }
@@ -126,7 +133,7 @@ select {
     height: 3vw;
     font-size: 1.5vw;
   }
-  .sidebar-input {
+  .sidebar-input, .sidebar-background-input {
     width: 28vw;
     height: 3vw;
     font-size: 1.5vw;
@@ -164,7 +171,7 @@ select {
     height: 4vw;
     font-size: 2vw;
   }
-  .sidebar-input {
+  .sidebar-input, .sidebar-background-input {
     width: 38vw;
     height: 4vw;
     font-size: 2vw;
@@ -203,7 +210,7 @@ select {
     height: 4vh;
     font-size: 2vh;
   }
-  .sidebar-input {
+  .sidebar-input, .sidebar-background-input {
     width: 98vw;
     height: 4vh;
     font-size: 2vh;
