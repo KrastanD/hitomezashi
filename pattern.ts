@@ -19,6 +19,7 @@ import {
 type DrawPatternProps = {
   verticalOptions?: PatternProps;
   horizontalOptions?: PatternProps;
+  backgroundOptions?: { color: string };
 };
 
 const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
@@ -34,14 +35,20 @@ let defaultProps: PatternProps = {
 };
 let horizontalProps = { ...defaultProps };
 let verticalProps = { ...defaultProps };
+let backgroundProps = { color: "black" };
 
 export function drawPattern({
   verticalOptions,
   horizontalOptions,
+  backgroundOptions,
 }: DrawPatternProps) {
+  if (backgroundOptions?.color) {
+    backgroundProps.color = backgroundOptions.color;
+  }
+
   ctx.moveTo(0, 0);
   ctx.fillStyle = "white";
-  document.body.style.backgroundColor = "black";
+  document.body.style.backgroundColor = backgroundProps.color;
   ctx.font = "8px Arial";
 
   if (verticalOptions) {

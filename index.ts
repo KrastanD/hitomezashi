@@ -2,6 +2,7 @@ import { drawPattern } from "./pattern";
 import "./sidebar";
 import "./horizontal";
 import "./vertical";
+import "./background";
 
 function resizeCanvas() {
   canvas.width =
