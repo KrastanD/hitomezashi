@@ -14,7 +14,7 @@ function resizeCanvas() {
     document.documentElement.clientHeight ||
     document.body.clientHeight;
 
-  drawPattern({});
+  drawPattern();
 }
 
 resizeCanvas();

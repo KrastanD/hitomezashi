@@ -1,6 +1,12 @@
 import { drawPattern } from "./pattern";
 import { PatternProps, Sequence, Stroke } from "./types";
-import { isColor } from "./utils";
+import {
+  convertBooleanUrlParam,
+  getUrlParam,
+  insertUrlParam,
+  isColor,
+  removeUrlParam,
+} from "./utils";
 
 const sequenceInput = document.forms[0][
   "horizontalSequence"
@@ -26,8 +32,19 @@ let options: PatternProps = {
   strokeOptions: { stroke: Stroke.Rainbow },
 };
 
-sequenceInput.oninput = function (event) {
-  const { value } = event.target as HTMLInputElement;
+const hSeq = getUrlParam("hSeq");
+if (hSeq) {
+  sequenceInput.value = hSeq;
+  setSequenceInput(hSeq);
+}
+
+sequenceInput.addEventListener("input", (e: Event) => {
+  const { value } = e.target as HTMLInputElement;
+  insertUrlParam("hSeq", encodeURIComponent(value));
+  setSequenceInput(value);
+});
+
+function setSequenceInput(value: string) {
   switch (sequenceType) {
     case Sequence.Binary:
       sequenceInput.title = "1s and 0s only";
@@ -49,19 +66,29 @@ sequenceInput.oninput = function (event) {
       ...options,
       sequenceOptions: {
         isSequenceVisible: options.sequenceOptions.isSequenceVisible,
-        sequence: value ? value : "1",
+        sequence: value,
         sequenceType: sequenceType,
       },
     };
     drawPattern({ horizontalOptions: options });
   }
-};
+}
 
-sequenceSelect.oninput = function (event) {
-  const { value } = event.target as HTMLSelectElement;
+const hSeqType = getUrlParam("hSeqType");
+if (hSeqType) {
+  sequenceSelect.value = hSeqType;
+  setSequenceType(hSeqType);
+}
+
+sequenceSelect.addEventListener("input", (e: Event) => {
+  const { value } = e.target as HTMLSelectElement;
+  insertUrlParam("hSeqType", encodeURIComponent(value));
+  setSequenceType(value);
+});
+
+function setSequenceType(value: string) {
   sequenceType = Number(value) as Sequence;
   if (sequenceType === Sequence.Random) {
-    sequenceInput.value = "";
     sequenceInput.style.display = "none";
     options = {
       ...options,
@@ -75,10 +102,23 @@ sequenceSelect.oninput = function (event) {
   } else {
     sequenceInput.style.display = "block";
   }
-};
+  sequenceInput.value = "";
+  removeUrlParam("hSeq");
+}
 
-checkbox.oninput = function (event) {
-  const { checked } = event.target as HTMLInputElement;
+const hLegend = getUrlParam("hLegend");
+if (hLegend) {
+  checkbox.checked = convertBooleanUrlParam(hLegend);
+  setLegend(convertBooleanUrlParam(hLegend));
+}
+
+checkbox.addEventListener("input", (e: Event) => {
+  const { checked } = e.target as HTMLInputElement;
+  insertUrlParam("hLegend", encodeURIComponent(checked));
+  setLegend(checked);
+});
+
+function setLegend(checked: boolean) {
   options = {
     ...options,
     sequenceOptions: {
@@ -88,10 +128,21 @@ checkbox.oninput = function (event) {
     },
   };
   drawPattern({ horizontalOptions: options });
-};
+}
 
-strokeInput.oninput = function (event) {
-  const { value } = event.target as HTMLInputElement;
+const hStroke = getUrlParam("hStroke");
+if (hStroke) {
+  strokeInput.value = hStroke;
+  setStrokeInput(hStroke);
+}
+
+strokeInput.addEventListener("input", (e: Event) => {
+  const { value } = e.target as HTMLSelectElement;
+  insertUrlParam("hStroke", encodeURIComponent(value));
+  setStrokeInput(value);
+});
+
+function setStrokeInput(value: string) {
   if (isColor(value)) {
     options = {
       ...options,
@@ -102,19 +153,27 @@ strokeInput.oninput = function (event) {
     };
     drawPattern({ horizontalOptions: options });
   }
-};
+}
 
-strokeSelect.oninput = function (event) {
-  const { value } = event.target as HTMLSelectElement;
-  const strokeType = Number(value) as Stroke;
+const hStrokeType = getUrlParam("hStrokeType");
+if (hStrokeType) {
+  strokeSelect.value = hStrokeType;
+  setStrokeType(Number(hStrokeType));
+}
+
+strokeSelect.addEventListener("input", (e: Event) => {
+  const { value } = e.target as HTMLSelectElement;
+  insertUrlParam("hStrokeType", encodeURIComponent(value));
+  setStrokeType(Number(value));
+});
+
+function setStrokeType(strokeType: Stroke) {
   if (strokeType === Stroke.Random || strokeType === Stroke.Rainbow) {
-    strokeInput.value = "";
     strokeInput.style.display = "none";
   } else {
     strokeInput.style.display = "block";
     strokeInput.title = "HTML color or hex code";
   }
-  strokeInput.value = "";
   options = {
     ...options,
     strokeOptions: {
@@ -122,4 +181,4 @@ strokeSelect.oninput = function (event) {
     },
   };
   drawPattern({ horizontalOptions: options });
-};
+}

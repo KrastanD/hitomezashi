@@ -8,9 +8,11 @@ import {
 } from "./types";
 import {
   charToBinary,
+  convertBooleanUrlParam,
   decimalToBinary,
   drawHorizontalLine,
   drawVerticalLine,
+  getUrlParam,
   isColor,
   isEven,
   isVowel,
@@ -41,14 +43,16 @@ export function drawPattern({
   verticalOptions,
   horizontalOptions,
   backgroundOptions,
-}: DrawPatternProps) {
+}: DrawPatternProps = {}) {
   if (backgroundOptions?.color) {
     backgroundProps.color = backgroundOptions.color;
   }
 
   ctx.moveTo(0, 0);
   ctx.fillStyle = "white";
-  document.body.style.backgroundColor = backgroundProps.color;
+  document.body.style.backgroundColor =
+    getUrlParam("background") || backgroundProps.color;
+
   ctx.font = "8px Arial";
 
   if (verticalOptions) {
@@ -58,6 +62,54 @@ export function drawPattern({
   if (horizontalOptions) {
     horizontalProps = horizontalOptions;
   }
+  const hSeqType = getUrlParam("hSeqType");
+  if (hSeqType) {
+    horizontalProps.sequenceOptions.sequenceType = Number(hSeqType);
+  }
+  const hSeq = getUrlParam("hSeq");
+  if (hSeq) {
+    horizontalProps.sequenceOptions.sequence = hSeq;
+  }
+  const hStroke = getUrlParam("hStroke");
+  if (hStroke) {
+    horizontalProps.strokeOptions.color = hStroke;
+  }
+
+  const hStrokeType = getUrlParam("hStrokeType");
+  if (hStrokeType) {
+    horizontalProps.strokeOptions.stroke = Number(hStrokeType);
+  }
+
+  const hLegend = getUrlParam("hLegend");
+  if (hLegend) {
+    horizontalProps.sequenceOptions.isSequenceVisible =
+      convertBooleanUrlParam(hLegend);
+  }
+
+  const vSeqType = getUrlParam("vSeqType");
+  if (vSeqType) {
+    verticalProps.sequenceOptions.sequenceType = Number(vSeqType);
+  }
+  const vSeq = getUrlParam("vSeq");
+  if (vSeq) {
+    verticalProps.sequenceOptions.sequence = vSeq;
+  }
+  const vStroke = getUrlParam("vStroke");
+  if (vStroke) {
+    verticalProps.strokeOptions.color = vStroke;
+  }
+
+  const vStrokeType = getUrlParam("vStrokeType");
+  if (vStrokeType) {
+    verticalProps.strokeOptions.stroke = Number(vStrokeType);
+  }
+
+  const vLegend = getUrlParam("vLegend");
+  if (vLegend) {
+    verticalProps.sequenceOptions.isSequenceVisible =
+      convertBooleanUrlParam(vLegend);
+  }
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawHorizontalPattern(verticalProps);
   drawVerticalPattern(horizontalProps);
@@ -67,7 +119,10 @@ export function drawHorizontalPattern({
   sequenceOptions: { isSequenceVisible, sequence, sequenceType },
   strokeOptions: { stroke, color },
 }: PatternProps) {
-  const sequenceArray = prepareSequence(sequence, sequenceType);
+  let sequenceArray = prepareSequence(sequence, sequenceType);
+  if (sequenceArray.length === 0) {
+    sequenceArray = [1];
+  }
   for (
     let index = DISTANCE_APART;
     index < canvas.height;
@@ -97,7 +152,10 @@ export function drawVerticalPattern({
   sequenceOptions: { isSequenceVisible, sequence, sequenceType },
   strokeOptions: { stroke, color },
 }: PatternProps) {
-  const sequenceArray = prepareSequence(sequence, sequenceType);
+  let sequenceArray = prepareSequence(sequence, sequenceType);
+  if (sequenceArray.length === 0) {
+    sequenceArray = [1];
+  }
   for (
     let index = DISTANCE_APART;
     index < canvas.width;
