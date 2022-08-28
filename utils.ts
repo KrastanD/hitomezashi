@@ -41,3 +41,41 @@ export function drawVerticalLine(
   ctx.moveTo(x, y);
   ctx.lineTo(x, y + distance);
 }
+
+export function insertUrlParam(key: string, value: string) {
+  if (history.pushState) {
+    let searchParams = new URLSearchParams(window.location.search);
+    searchParams.set(key, value);
+    updateAndPushUrl(searchParams);
+  }
+}
+
+export function getUrlParam(key: string) {
+  let searchParams = new URLSearchParams(window.location.search);
+  let value: string | null = searchParams.get(key);
+  if (value) {
+    return decodeURIComponent(value);
+  }
+  return null;
+}
+
+export function removeUrlParam(key: string) {
+  let searchParams = new URLSearchParams(window.location.search);
+  searchParams.delete(key);
+  updateAndPushUrl(searchParams);
+}
+
+function updateAndPushUrl(searchParams: URLSearchParams) {
+  let newurl =
+    window.location.protocol +
+    "//" +
+    window.location.host +
+    window.location.pathname +
+    "?" +
+    searchParams.toString();
+  window.history.pushState({ path: newurl }, "", newurl);
+}
+
+export function convertBooleanUrlParam(value: string) {
+  return value === "true";
+}
