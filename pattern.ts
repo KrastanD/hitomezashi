@@ -120,7 +120,7 @@ export function drawHorizontalPattern({
   strokeOptions: { stroke, color },
 }: PatternProps) {
   let sequenceArray = prepareSequence(sequence, sequenceType);
-  if (sequenceArray.length === 0) {
+  if (sequenceArray?.length === 0) {
     sequenceArray = [1];
   }
   for (
@@ -153,7 +153,7 @@ export function drawVerticalPattern({
   strokeOptions: { stroke, color },
 }: PatternProps) {
   let sequenceArray = prepareSequence(sequence, sequenceType);
-  if (sequenceArray.length === 0) {
+  if (sequenceArray?.length === 0) {
     sequenceArray = [1];
   }
   for (
