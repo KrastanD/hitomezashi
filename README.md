@@ -24,12 +24,12 @@ Options to:
   * User chosen 
   * Random
 
-Future:
-
 * Background color
   * User chosen (potentially color wheel)
 
 * URL params to configure page and vice versa
+
+Future:
 * Repeat/don't repeat sequence
 * Save canvas as an image
 * Show how user entered data maps to sequence
