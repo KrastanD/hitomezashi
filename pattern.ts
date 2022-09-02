@@ -1,11 +1,11 @@
-import { DISTANCE_APART } from "./constants";
+import { DISTANCE_APART } from "./constants.js";
 import {
   PatternProps,
   GetBitProps,
   Sequence,
   Stroke,
   StrokeOptions,
-} from "./types";
+} from "./types.js";
 import {
   charToBinary,
   convertBooleanUrlParam,
@@ -16,7 +16,7 @@ import {
   isColor,
   isEven,
   isVowel,
-} from "./utils";
+} from "./utils.js";
 
 type DrawPatternProps = {
   verticalOptions?: PatternProps;

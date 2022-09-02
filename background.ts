@@ -1,5 +1,5 @@
-import { drawPattern } from "./pattern";
-import { getUrlParam, insertUrlParam, isColor } from "./utils";
+import { drawPattern } from "./pattern.js";
+import { getUrlParam, insertUrlParam, isColor } from "./utils.js";
 
 const backgroundInput = document.forms[0][
   "backgroundInput"
