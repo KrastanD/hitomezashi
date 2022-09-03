@@ -1,12 +1,12 @@
-import { drawPattern } from "./pattern";
-import { PatternProps, Sequence, Stroke } from "./types";
+import { drawPattern } from "./pattern.js";
+import { PatternProps, Sequence, Stroke } from "./types.js";
 import {
   convertBooleanUrlParam,
   getUrlParam,
   insertUrlParam,
   isColor,
   removeUrlParam,
-} from "./utils";
+} from "./utils.js";
 
 const sequenceInput = document.forms[0][
   "horizontalSequence"
