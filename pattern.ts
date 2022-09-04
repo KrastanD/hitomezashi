@@ -16,6 +16,7 @@ import {
   isColor,
   isEven,
   isVowel,
+  shouldTextBeBlack,
 } from "./utils.js";
 
 type DrawPatternProps = {
@@ -49,7 +50,8 @@ export function drawPattern({
   }
 
   ctx.moveTo(0, 0);
-  ctx.fillStyle = "white";
+  ctx.fillStyle = shouldTextBeBlack(backgroundProps.color) ? "black" : "white";
+
   document.body.style.backgroundColor =
     getUrlParam("background") || backgroundProps.color;
 
