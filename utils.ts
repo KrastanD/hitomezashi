@@ -79,3 +79,11 @@ function updateAndPushUrl(searchParams: URLSearchParams) {
 export function convertBooleanUrlParam(value: string) {
   return value === "true";
 }
+
+export function shouldTextBeBlack(bgColor: string): boolean {
+  const color = bgColor.charAt(0) === "#" ? bgColor.substring(1, 7) : bgColor; //shouldn't be necessary but just in case
+  const red = parseInt(color.substring(0, 2), 16); // hexToR
+  const green = parseInt(color.substring(2, 4), 16); // hexToG
+  const blue = parseInt(color.substring(4, 6), 16); // hexToB
+  return red * 0.299 + green * 0.587 + blue * 0.114 > 186 ? true : false;
+}
