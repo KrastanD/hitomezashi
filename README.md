@@ -25,11 +25,13 @@ Options to:
   * Random
 
 * Background color
-  * User chosen (potentially color wheel)
+  * User chosen
 
 * URL params to configure page and vice versa
 
+* Color picker for color inputs
+
 Future:
-* Repeat/don't repeat sequence
 * Save canvas as an image
+* Add share button 
 * Show how user entered data maps to sequence
