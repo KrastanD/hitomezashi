@@ -5,7 +5,6 @@ body {
   background-color: black;
 }
 .sidebar {
-  align-self: baseline;
   height: 100%;
   width: 0;
   position: fixed;
@@ -14,27 +13,38 @@ body {
   left: 0;
   background-color: #111;
   overflow-x: hidden;
+  overflow-y: scroll;
   transition: 0.5s;
-  padding-top: 3vw;
   white-space: nowrap;
 }
-.sidebar .closebtn {
+
+.sidebar-container {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.closeBtn {
   position: absolute;
   top: 0;
-  right: 1vw;
-  font-size: 2vw;
-  padding: 0.5vw;
+  right: 10px;
+  font-size: 32px;
+  padding: 5px;
   text-decoration: none;
   color: #818181;
   display: block;
   transition: 0.3s;
   cursor: pointer;
 }
+
+.closeBtn-container {
+  height: 32px;
+}
+
 .openBtn {
   position: absolute;
-  left: 1vw;
-  bottom: 1vw;
-  font-size: 3vw;
+  left: 10px;
+  bottom: 10px;
+  font-size: 32px;
   cursor: pointer;
 }
 .canvas-container {
@@ -45,31 +55,24 @@ body {
 }
 
 .canvas-sidebar-open {
-  padding-left: 20vw;
+  margin-left: 300px;
 }
 .sidebar-open {
-  width: 20vw;
+  width: 300px;
 }
 .sidebar-label {
+  line-height: 0;
   color: white;
-  font-size: 1.5vw;
-  padding: 0.5vw;
   transition-delay: 500ms;
 }
 
 .sidebar-input {
-  width: 19vw;
-  height: 2vw;
-  margin: 0.5vw;
-  font-size: 1vw;
+  margin: 5px;
   display: none;
 }
 
 .sidebar-background-input {
-  width: 19vw;
-  height: 2vw;
-  margin: 0.5vw;
-  font-size: 1vw;
+  margin: 5px;
 }
 
 .sidebar-input:invalid {
@@ -81,28 +84,18 @@ body {
 }
 
 .sidebar-select {
-  width: 19vw;
-  height: 2vw;
-  margin: 0.5vw;
-  font-size: 1vw;
-}
-
-.sidebar option {
-  font-size: 1vw;
+  margin: 5px;
 }
 
 .sidebar-checkbox-label {
   color: white;
-  font-size: 1.2vw;
   margin: 0;
-  margin-left: 0.5vw;
+  margin-left: 5px;
 }
 
 .sidebar-checkbox {
   margin: 0;
-  margin-left: 0.5vw;
-  width: 1.2vw;
-  height: 1.2vw;
+  margin-left: 5px;
 }
 
 .sidebar-form {
@@ -121,118 +114,11 @@ select {
   box-sizing: border-box;
 }
 
-@media screen and (max-width: 1024px) {
-  .sidebar-open {
-    width: 30vw;
-  }
-  .canvas-sidebar-open {
-    padding-left: 30vw;
-  }
-  .sidebar-select {
-    width: 28vw;
-    height: 3vw;
-    font-size: 1.5vw;
-  }
-  .sidebar-input, .sidebar-background-input {
-    width: 28vw;
-    height: 3vw;
-    font-size: 1.5vw;
-  }
-  .sidebar-label {
-    font-size: 2.5vw;
-  }
-  .sidebar-checkbox {
-    width: 2vw;
-    height: 2vw;
-  }
-  .sidebar-checkbox-label {
-    font-size: 2vw;
-  }
-  .sidebar .closebtn {
-    font-size: 3vw;
-  }
-  .sidebar {
-    padding-top: 4vw;
-  }
-  .openBtn {
-    font-size: 4vw;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .sidebar-open {
-    width: 40vw;
-  }
-  .canvas-sidebar-open {
-    padding-left: 40vw;
-  }
-  .sidebar-select {
-    width: 38vw;
-    height: 4vw;
-    font-size: 2vw;
-  }
-  .sidebar-input, .sidebar-background-input {
-    width: 38vw;
-    height: 4vw;
-    font-size: 2vw;
-  }
-  .sidebar-label {
-    font-size: 3vw;
-  }
-  .sidebar-checkbox {
-    width: 2vw;
-    height: 2vw;
-  }
-  .sidebar-checkbox-label {
-    font-size: 2vw;
-  }
-  .sidebar .closebtn {
-    font-size: 3vw;
-    padding: 1vw;
-  }
-  .sidebar {
-    padding-top: 5vw;
-  }
-  .openBtn {
-    font-size: 5vw;
-  }
-}
-
 @media screen and (max-width: 576px) {
   .sidebar-open {
     width: 100vw;
   }
   .canvas-sidebar-open {
     padding-left: 100vw;
-  }
-  .sidebar-select {
-    width: 98vw;
-    height: 4vh;
-    font-size: 2vh;
-  }
-  .sidebar-input, .sidebar-background-input {
-    width: 98vw;
-    height: 4vh;
-    font-size: 2vh;
-  }
-  .sidebar-label {
-    font-size: 3vh;
-  }
-  .sidebar-checkbox {
-    width: 2vh;
-    height: 2vh;
-  }
-  .sidebar-checkbox-label {
-    font-size: 2vh;
-  }
-  .sidebar .closebtn {
-    font-size: 3vh;
-  }
-  .sidebar {
-    padding-top: 5vh;
-  }
-  .openBtn {
-    font-size: 4vh;
-    left: 1vh;
   }
 }
