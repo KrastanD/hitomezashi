@@ -45,6 +45,10 @@ export function drawPattern({
   horizontalOptions,
   backgroundOptions,
 }: DrawPatternProps = {}) {
+  if (!ctx) {
+    return;
+  }
+
   if (backgroundOptions?.color) {
     backgroundProps.color = backgroundOptions.color;
   }
@@ -121,8 +125,11 @@ export function drawHorizontalPattern({
   sequenceOptions: { isSequenceVisible, sequence, sequenceType },
   strokeOptions: { stroke, color },
 }: PatternProps) {
+  if (!ctx) {
+    return;
+  }
   let sequenceArray = prepareSequence(sequence, sequenceType);
-  if (sequenceArray?.length === 0) {
+  if (sequenceArray?.length === 0 || !sequenceArray) {
     sequenceArray = [1];
   }
   for (
@@ -154,8 +161,11 @@ export function drawVerticalPattern({
   sequenceOptions: { isSequenceVisible, sequence, sequenceType },
   strokeOptions: { stroke, color },
 }: PatternProps) {
+  if (!ctx) {
+    return;
+  }
   let sequenceArray = prepareSequence(sequence, sequenceType);
-  if (sequenceArray?.length === 0) {
+  if (sequenceArray?.length === 0 || !sequenceArray) {
     sequenceArray = [1];
   }
   for (
@@ -190,26 +200,26 @@ function getBit({ sequence, index, sequenceType }: GetBitProps): number {
       sequence[
         Math.round(Math.round(index / DISTANCE_APART) % sequence.length)
       ];
+
+    switch (sequenceType) {
+      case Sequence.Binary:
+      case Sequence.DecimalToBinary:
+      case Sequence.AlphabetParity:
+      case Sequence.AlphabetToBinary:
+        return sequenceValue;
+      case Sequence.DecimalParity:
+        return isEven(sequenceValue) ? 1 : 0;
+      default:
+        return 0;
+    }
   }
 
-  switch (sequenceType) {
-    case Sequence.Random:
-      return isEven(Math.round(Math.random() * DISTANCE_APART)) ? 1 : 0;
-    case Sequence.Binary:
-    case Sequence.DecimalToBinary:
-    case Sequence.AlphabetParity:
-    case Sequence.AlphabetToBinary:
-      return sequenceValue;
-    case Sequence.DecimalParity:
-      return isEven(sequenceValue) ? 1 : 0;
-    default:
-      return 0;
-  }
+  return isEven(Math.round(Math.random() * DISTANCE_APART)) ? 1 : 0;
 }
 
-function prepareSequence(sequence: string, sequenceType: Sequence): number[] {
+function prepareSequence(sequence: string, sequenceType: Sequence) {
   if (sequenceType === Sequence.Random) {
-    return;
+    return null;
   }
   const sequenceArray = sequence.split("");
 
@@ -244,6 +254,9 @@ function setStrokeStyle(
   index: number,
   isHorizontal?: boolean
 ) {
+  if (!ctx) {
+    return;
+  }
   switch (stroke) {
     case Stroke.Rainbow:
       let deg = 0;
