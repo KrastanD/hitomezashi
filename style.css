@@ -18,9 +18,33 @@ body {
   white-space: nowrap;
 }
 
-.sidebar-container {
-  padding-left: 10px;
-  padding-right: 10px;
+.sidebar-footer {
+  color: white;
+  font-weight: bold;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  line-height: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #222225;
+}
+
+.created-by {
+  font-size: 18px;
+}
+
+.source-code {
+  color: white;
+  text-decoration: underline;
+}
+
+.sidebar-github-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 .closeBtn {
@@ -101,6 +125,17 @@ body {
 .sidebar-form {
   display: flex;
   flex-direction: column;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.sidebar-content-wrapper {
+  min-height: 100%;
+  margin-bottom: -90px;
+}
+
+.sidebar-footer-push {
+  height: 100px;
 }
 
 .sidebar-form hr {
