@@ -43,16 +43,14 @@ export function drawVerticalLine(
 }
 
 export function insertUrlParam(key: string, value: string) {
-  if (history.pushState) {
-    let searchParams = new URLSearchParams(window.location.search);
-    searchParams.set(key, value);
-    updateAndPushUrl(searchParams);
-  }
+  let searchParams = new URLSearchParams(window.location.search);
+  searchParams.set(key, value);
+  updateAndPushUrl(searchParams);
 }
 
 export function getUrlParam(key: string) {
   let searchParams = new URLSearchParams(window.location.search);
-  let value: string | null = searchParams.get(key);
+  let value = searchParams.get(key);
   if (value) {
     return decodeURIComponent(value);
   }

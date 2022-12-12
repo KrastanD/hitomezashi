@@ -44,7 +44,7 @@ sequenceInput.addEventListener("input", (e: Event) => {
   setSequenceInput(value);
 });
 
-function setSequenceInput(value: string) {
+function setSequenceInput(sequenceInputValue: string) {
   switch (sequenceType) {
     case Sequence.Binary:
       sequenceInput.title = "1s and 0s only";
@@ -66,7 +66,7 @@ function setSequenceInput(value: string) {
       ...options,
       sequenceOptions: {
         isSequenceVisible: options.sequenceOptions.isSequenceVisible,
-        sequence: value,
+        sequence: sequenceInputValue,
         sequenceType: sequenceType,
       },
     };
@@ -86,8 +86,8 @@ sequenceSelect.addEventListener("input", (e: Event) => {
   setSequenceType(value);
 });
 
-function setSequenceType(value: string) {
-  sequenceType = Number(value) as Sequence;
+function setSequenceType(sequenceTypeValue: string) {
+  sequenceType = Number(sequenceTypeValue) as Sequence;
   if (sequenceType === Sequence.Random) {
     sequenceInput.style.display = "none";
     options = {
@@ -142,13 +142,13 @@ strokeInput.addEventListener("input", (e: Event) => {
   setStrokeInput(value);
 });
 
-function setStrokeInput(value: string) {
-  if (isColor(value)) {
+function setStrokeInput(strokeInputValue: string) {
+  if (isColor(strokeInputValue)) {
     options = {
       ...options,
       strokeOptions: {
         stroke: options.strokeOptions.stroke,
-        color: value,
+        color: strokeInputValue,
       },
     };
     drawPattern({ horizontalOptions: options });

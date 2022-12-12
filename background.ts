@@ -6,7 +6,7 @@ const backgroundInput = document.forms[0][
 ] as HTMLInputElement;
 
 const background = getUrlParam("background");
-if (isColor(background)) {
+if (background && isColor(background)) {
   backgroundInput.value = background;
 }
 

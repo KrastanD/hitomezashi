@@ -12,14 +12,14 @@ export enum Sequence {
   AlphabetToBinary, //convert letter to binary
 }
 export type GetBitProps = {
-  sequence?: number[];
+  sequence: number[];
   sequenceType: Sequence;
   index: number;
 };
 
 export type PatternProps = {
-  sequenceOptions?: SequenceOptions;
-  strokeOptions?: StrokeOptions;
+  sequenceOptions: SequenceOptions;
+  strokeOptions: StrokeOptions;
 };
 
 export type SequenceOptions = {
