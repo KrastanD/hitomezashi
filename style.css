@@ -161,11 +161,11 @@ select {
 
 @font-face {
   font-family: SourceSansPro;
-  src: url(SourceSansPro-Regular.ttf);
+  src: url(./assets/SourceSansPro-Regular.ttf);
 }
 
 @font-face {
   font-family: SourceSansPro;
-  src: url(./SourceSansPro-Bold.ttf);
+  src: url(./assets/SourceSansPro-Bold.ttf);
   font-weight: bold;
 }

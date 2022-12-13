@@ -1,8 +1,8 @@
-import { drawPattern } from "./pattern.js";
-import "./sidebar.js";
-import "./horizontal.js";
-import "./vertical.js";
-import "./background.js";
+import { drawPattern } from "./src/pattern.js";
+import "./src/sidebar.js";
+import "./src/horizontal.js";
+import "./src/vertical.js";
+import "./src/background.js";
 
 function resizeCanvas() {
   const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
