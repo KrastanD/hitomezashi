@@ -3,6 +3,7 @@ body {
   overflow: hidden;
   margin: 0;
   background-color: black;
+  font-family: SourceSansPro;
 }
 .sidebar {
   height: 100%;
@@ -156,4 +157,15 @@ select {
   .canvas-sidebar-open {
     padding-left: 100vw;
   }
+}
+
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro-Regular.ttf);
+}
+
+@font-face {
+  font-family: SourceSansPro;
+  src: url(./SourceSansPro-Bold.ttf);
+  font-weight: bold;
 }
