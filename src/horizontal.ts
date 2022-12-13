@@ -84,6 +84,8 @@ sequenceSelect.addEventListener("input", (e: Event) => {
   const { value } = e.target as HTMLSelectElement;
   insertUrlParam("hSeqType", encodeURIComponent(value));
   setSequenceType(value);
+  sequenceInput.value = "";
+  removeUrlParam("hSeq");
 });
 
 function setSequenceType(sequenceTypeValue: string) {
@@ -102,8 +104,6 @@ function setSequenceType(sequenceTypeValue: string) {
   } else {
     sequenceInput.style.display = "block";
   }
-  sequenceInput.value = "";
-  removeUrlParam("hSeq");
 }
 
 const hLegend = getUrlParam("hLegend");

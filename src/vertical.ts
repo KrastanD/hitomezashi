@@ -82,6 +82,8 @@ sequenceSelect.addEventListener("input", (e: Event) => {
   const { value } = e.target as HTMLSelectElement;
   insertUrlParam("vSeqType", encodeURIComponent(value));
   setSequenceType(value);
+  sequenceInput.value = "";
+  removeUrlParam("vSeq");
 });
 
 function setSequenceType(value: string) {
@@ -100,8 +102,6 @@ function setSequenceType(value: string) {
   } else {
     sequenceInput.style.display = "block";
   }
-  sequenceInput.value = "";
-  removeUrlParam("vSeq");
 }
 
 const vLegend = getUrlParam("vLegend");
