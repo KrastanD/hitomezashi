@@ -1,3 +1,10 @@
+import {
+  convertBooleanUrlParam,
+  getUrlParam,
+  insertUrlParam,
+  removeUrlParam,
+} from "./utils.js";
+
 const sidebar = document.getElementById("mySidebar") as HTMLDivElement;
 const sidebarOpenButton = document.getElementById(
   "sidebarOpenButton"
@@ -7,12 +14,23 @@ const sidebarCloseButton = document.getElementById(
 ) as HTMLSpanElement;
 const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
 
-sidebarOpenButton.onclick = function openNav() {
+function openNav() {
   sidebar.classList.add("sidebar-open");
   canvas.classList.add("canvas-sidebar-open");
-};
+  insertUrlParam("isSidebarOpen", encodeURIComponent(true));
+}
 
-sidebarCloseButton.onclick = function closeNav() {
+function closeNav() {
   sidebar.classList.remove("sidebar-open");
   canvas.classList.remove("canvas-sidebar-open");
-};
+  removeUrlParam("isSidebarOpen");
+}
+
+sidebarOpenButton.addEventListener("click", openNav);
+
+sidebarCloseButton.addEventListener("click", closeNav);
+
+const isSidebarOpen = getUrlParam("isSidebarOpen");
+if (isSidebarOpen && convertBooleanUrlParam(isSidebarOpen)) {
+  openNav();
+}

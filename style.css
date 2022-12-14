@@ -43,8 +43,15 @@ body {
 
 .sidebar-github-container {
   display: flex;
-  flex-direction: row;
   align-items: center;
+  gap: 10px;
+}
+
+.sidebar-examples-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-right: 10px;
   gap: 10px;
 }
 
@@ -62,7 +69,7 @@ body {
 }
 
 .closeBtn-container {
-  height: 32px;
+  height: 50px;
 }
 
 .openBtn {
