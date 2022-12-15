@@ -68,6 +68,19 @@ body {
   cursor: pointer;
 }
 
+.resetBtn {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 24px;
+  padding: 5px;
+  text-decoration: none;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
 .closeBtn-container {
   height: 50px;
 }
