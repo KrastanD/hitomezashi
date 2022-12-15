@@ -12,6 +12,10 @@ const sidebarOpenButton = document.getElementById(
 const sidebarCloseButton = document.getElementById(
   "sidebarCloseButton"
 ) as HTMLSpanElement;
+
+const sidebarResetButton = document.getElementsByClassName(
+  "resetBtn"
+)[0] as HTMLSpanElement;
 const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
 
 function openNav() {
@@ -29,6 +33,10 @@ function closeNav() {
 sidebarOpenButton.addEventListener("click", openNav);
 
 sidebarCloseButton.addEventListener("click", closeNav);
+
+sidebarResetButton.addEventListener("click", () => {
+  window.location.replace("https://hitomezashi.krastan.com?isSidebarOpen=true");
+});
 
 const isSidebarOpen = getUrlParam("isSidebarOpen");
 if (isSidebarOpen && convertBooleanUrlParam(isSidebarOpen)) {
