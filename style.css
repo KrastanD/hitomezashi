@@ -72,13 +72,14 @@ body {
   position: absolute;
   top: 0;
   left: 10px;
-  font-size: 24px;
+  font-size: 32px;
   padding: 5px;
   text-decoration: none;
   color: #818181;
   display: block;
   transition: 0.3s;
   cursor: pointer;
+  line-height: 40px;
 }
 
 .closeBtn-container {
