@@ -10,8 +10,7 @@ import {
   charToBinary,
   convertBooleanUrlParam,
   decimalToBinary,
-  drawHorizontalLine,
-  drawVerticalLine,
+  drawLine,
   getUrlParam,
   isColor,
   isEven,
@@ -117,14 +116,17 @@ export function drawPattern({
   }
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawHorizontalPattern(verticalProps);
-  drawVerticalPattern(horizontalProps);
+  drawPatternLines(verticalProps, true);
+  drawPatternLines(horizontalProps, false);
 }
 
-export function drawHorizontalPattern({
-  sequenceOptions: { isSequenceVisible, sequence, sequenceType },
-  strokeOptions: { stroke, color },
-}: PatternProps) {
+export function drawPatternLines(
+  {
+    sequenceOptions: { isSequenceVisible, sequence, sequenceType },
+    strokeOptions: { stroke, color },
+  }: PatternProps,
+  isHorizontal: boolean
+) {
   if (!ctx) {
     return;
   }
@@ -132,12 +134,13 @@ export function drawHorizontalPattern({
   if (sequenceArray?.length === 0 || !sequenceArray) {
     sequenceArray = [1];
   }
+  const outerLength = isHorizontal ? canvas.height : canvas.width;
   for (
     let index = DISTANCE_APART;
-    index < canvas.height;
+    index < outerLength;
     index += DISTANCE_APART
   ) {
-    setStrokeStyle({ stroke, color }, index, true);
+    setStrokeStyle({ stroke, color }, index, isHorizontal);
     ctx.beginPath();
 
     const bit = getBit({
@@ -147,46 +150,17 @@ export function drawHorizontalPattern({
     });
     let startingIndex = bit ? 0 : DISTANCE_APART;
     if (isSequenceVisible) {
-      ctx.fillText(`${bit}`, 2, index + 2);
-      startingIndex += DISTANCE_APART;
-    }
-    for (let i = startingIndex; i < canvas.width; i += 2 * DISTANCE_APART) {
-      drawHorizontalLine({ x: i, y: index }, DISTANCE_APART, ctx);
-    }
-    ctx.stroke();
-  }
-}
+      isHorizontal
+        ? ctx.fillText(`${bit}`, 2, index + 2)
+        : ctx.fillText(`${bit}`, index - 2, 8);
 
-export function drawVerticalPattern({
-  sequenceOptions: { isSequenceVisible, sequence, sequenceType },
-  strokeOptions: { stroke, color },
-}: PatternProps) {
-  if (!ctx) {
-    return;
-  }
-  let sequenceArray = prepareSequence(sequence, sequenceType);
-  if (sequenceArray?.length === 0 || !sequenceArray) {
-    sequenceArray = [1];
-  }
-  for (
-    let index = DISTANCE_APART;
-    index < canvas.width;
-    index += DISTANCE_APART
-  ) {
-    setStrokeStyle({ stroke, color }, index);
-    ctx.beginPath();
-    const bit = getBit({
-      sequence: sequenceArray,
-      index: index - DISTANCE_APART,
-      sequenceType,
-    });
-    let startingIndex = bit ? 0 : DISTANCE_APART;
-    if (isSequenceVisible) {
-      ctx.fillText(`${bit}`, index - 2, 8);
       startingIndex += DISTANCE_APART;
     }
-    for (let i = startingIndex; i < canvas.height; i += 2 * DISTANCE_APART) {
-      drawVerticalLine({ x: index, y: i }, DISTANCE_APART, ctx);
+    const innerLength = isHorizontal ? canvas.width : canvas.height;
+    for (let i = startingIndex; i < innerLength; i += 2 * DISTANCE_APART) {
+      const coordinate = isHorizontal ? { x: i, y: index } : { x: index, y: i };
+      const angle = isHorizontal ? 0 : 90;
+      drawLine(coordinate, DISTANCE_APART, angle, ctx);
     }
     ctx.stroke();
   }

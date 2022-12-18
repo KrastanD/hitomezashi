@@ -42,6 +42,23 @@ export function drawVerticalLine(
   ctx.lineTo(x, y + distance);
 }
 
+export function drawLine(
+  { x, y }: Coordinate,
+  distance: number,
+  angle: number,
+  ctx: CanvasRenderingContext2D
+) {
+  ctx.moveTo(x, y);
+  ctx.lineTo(
+    x + distance * Math.cos(degreesToRadians(angle)),
+    y + distance * Math.sin(degreesToRadians(angle))
+  );
+}
+
+export function degreesToRadians(degrees: number): number {
+  return degrees * (Math.PI / 180);
+}
+
 export function insertUrlParam(key: string, value: string) {
   let searchParams = new URLSearchParams(window.location.search);
   searchParams.set(key, value);
