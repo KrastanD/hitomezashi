@@ -4,7 +4,6 @@ import "./src/vertical.js";
 import "./src/k.js";
 import Pattern from "./src/classPattern.js";
 import Canvas from "./src/classCanvas.js";
-import paramListeners from "./src/paramListeners.js";
 
 function resizeCanvas(canvas: Canvas) {
   const htmlCanvas = document.getElementById("myCanvas") as HTMLCanvasElement;
@@ -58,6 +57,4 @@ function resizeCanvas(canvas: Canvas) {
   canvas.draw();
 
   document.body.addEventListener("resize", () => resizeCanvas(canvas));
-
-  paramListeners(canvas);
 })();

@@ -41,6 +41,10 @@ class Pattern {
   public setStroke(stroke: Stroke) {
     this.stroke = stroke;
   }
+
+  public setStrokeColor(color: string) {
+    this.strokeColor = color;
+  }
 }
 
 export default Pattern;

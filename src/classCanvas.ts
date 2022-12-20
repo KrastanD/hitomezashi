@@ -3,8 +3,10 @@ import { DISTANCE_APART } from "./constants";
 import { GetBitProps, Sequence, Stroke } from "./types";
 import {
   charToBinary,
+  convertBooleanUrlParam,
   decimalToBinary,
   drawLine,
+  getUrlParam,
   isColor,
   isEven,
   isVowel,
@@ -66,6 +68,7 @@ class Canvas {
     this.ctx.fillStyle = shouldTextBeBlack(this.backgroundColor)
       ? "black"
       : "white";
+    this.checkParams();
     this.clearCanvas();
     this.drawPatternLines(this.horizontalPattern, true);
     this.drawPatternLines(this.verticalPattern, false);
@@ -196,6 +199,63 @@ class Canvas {
           this.ctx.strokeStyle = color;
         }
         break;
+    }
+  }
+
+  private checkParams() {
+    const bgColor = getUrlParam("background");
+    if (bgColor) {
+      this.setBackgroundColor(bgColor);
+    }
+
+    const hSeqType = getUrlParam("hSeqType");
+    if (hSeqType) {
+      this.horizontalPattern.setSequenceType(Number(hSeqType));
+    }
+    const hSeq = getUrlParam("hSeq");
+    if (hSeq) {
+      this.horizontalPattern.setSequence(hSeq);
+    }
+    const hStroke = getUrlParam("hStroke");
+    if (hStroke) {
+      this.horizontalPattern.setStrokeColor(hStroke);
+    }
+
+    const hStrokeType = getUrlParam("hStrokeType");
+    if (hStrokeType) {
+      this.horizontalPattern.setStroke(Number(hStrokeType));
+    }
+
+    const hLegend = getUrlParam("hLegend");
+    if (hLegend) {
+      this.horizontalPattern.setIsSequenceVisible(
+        convertBooleanUrlParam(hLegend)
+      );
+    }
+
+    const vSeqType = getUrlParam("vSeqType");
+    if (vSeqType) {
+      this.verticalPattern.setSequenceType(Number(vSeqType));
+    }
+    const vSeq = getUrlParam("vSeq");
+    if (vSeq) {
+      this.verticalPattern.setSequence(vSeq);
+    }
+    const vStroke = getUrlParam("vStroke");
+    if (vStroke) {
+      this.verticalPattern.setStrokeColor(vStroke);
+    }
+
+    const vStrokeType = getUrlParam("vStrokeType");
+    if (vStrokeType) {
+      this.verticalPattern.setStroke(Number(vStrokeType));
+    }
+
+    const vLegend = getUrlParam("vLegend");
+    if (vLegend) {
+      this.verticalPattern.setIsSequenceVisible(
+        convertBooleanUrlParam(vLegend)
+      );
     }
   }
 }
