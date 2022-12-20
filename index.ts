@@ -4,8 +4,31 @@ import "./src/vertical.js";
 import "./src/k.js";
 import Pattern from "./src/classPattern.js";
 import Canvas from "./src/classCanvas.js";
+import paramListeners from "./src/paramListeners.js";
 
-function resizeCanvas() {
+function resizeCanvas(canvas: Canvas) {
+  const htmlCanvas = document.getElementById("myCanvas") as HTMLCanvasElement;
+  const context = htmlCanvas.getContext("2d");
+  if (!context) {
+    return;
+  }
+
+  htmlCanvas.width =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+  htmlCanvas.height =
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    document.body.clientHeight;
+
+  canvas.setWidth(htmlCanvas.width);
+  canvas.setHeight(htmlCanvas.height);
+
+  canvas.draw();
+}
+
+(() => {
   const htmlCanvas = document.getElementById("myCanvas") as HTMLCanvasElement;
   const context = htmlCanvas.getContext("2d");
   if (!context) {
@@ -33,8 +56,8 @@ function resizeCanvas() {
   );
 
   canvas.draw();
-}
 
-resizeCanvas();
+  document.body.addEventListener("resize", () => resizeCanvas(canvas));
 
-document.body.onresize = resizeCanvas;
+  paramListeners(canvas);
+})();

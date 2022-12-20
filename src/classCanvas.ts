@@ -8,6 +8,7 @@ import {
   isColor,
   isEven,
   isVowel,
+  shouldTextBeBlack,
 } from "./utils";
 
 class Canvas {
@@ -32,6 +33,28 @@ class Canvas {
     this.width = width;
     this.height = height;
     this.backgroundColor = backgroundColor;
+    this.ctx.font = "8px Arial";
+  }
+
+  public getHorizontalPattern() {
+    return this.horizontalPattern;
+  }
+
+  public getVerticalPattern() {
+    return this.verticalPattern;
+  }
+
+  public setWidth(width: number) {
+    this.width = width;
+  }
+
+  public setHeight(height: number) {
+    this.height = height;
+  }
+
+  public setBackgroundColor(color: string) {
+    this.backgroundColor = color;
+    document.body.style.backgroundColor = color;
   }
 
   private clearCanvas() {
@@ -39,6 +62,10 @@ class Canvas {
   }
 
   public draw() {
+    this.ctx.moveTo(0, 0);
+    this.ctx.fillStyle = shouldTextBeBlack(this.backgroundColor)
+      ? "black"
+      : "white";
     this.clearCanvas();
     this.drawPatternLines(this.horizontalPattern, true);
     this.drawPatternLines(this.verticalPattern, false);
