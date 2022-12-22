@@ -1,10 +1,10 @@
-import { Sequence, Stroke } from "./types";
+import { Sequence, Stroke } from "./types.js";
 
 class Pattern {
-  private isSequenceVisible = false;
+  private isSequenceVisible = true;
   private sequenceType = Sequence.Random;
   private sequence = "";
-  private stroke = Stroke.Random;
+  private stroke = Stroke.Rainbow;
   private strokeColor: undefined | string = undefined;
   public getIsSequenceVisible() {
     return this.isSequenceVisible;

@@ -1,5 +1,5 @@
-import { drawPattern } from "./pattern.js";
-import { PatternProps, Sequence, Stroke } from "./types.js";
+import initCanvas from "./initCanvas.js";
+import { Sequence, Stroke } from "./types.js";
 import {
   convertBooleanUrlParam,
   getUrlParam,
@@ -22,15 +22,11 @@ const strokeInput = document.forms[0][
   "horizontalStrokeInput"
 ] as HTMLInputElement;
 
+if (!globalThis.canvas) {
+  initCanvas();
+}
+
 let sequenceType = Number(sequenceSelect.value);
-let options: PatternProps = {
-  sequenceOptions: {
-    isSequenceVisible: true,
-    sequenceType: Sequence.Random,
-    sequence: "",
-  },
-  strokeOptions: { stroke: Stroke.Rainbow },
-};
 
 const hSeq = getUrlParam("hSeq");
 if (hSeq) {
@@ -62,15 +58,8 @@ function setSequenceInput(sequenceInputValue: string) {
       break;
   }
   if (sequenceInput.reportValidity()) {
-    options = {
-      ...options,
-      sequenceOptions: {
-        isSequenceVisible: options.sequenceOptions.isSequenceVisible,
-        sequence: sequenceInputValue,
-        sequenceType: sequenceType,
-      },
-    };
-    drawPattern({ horizontalOptions: options });
+    globalThis.canvas.getHorizontalPattern().setSequence(sequenceInputValue);
+    globalThis.canvas.draw();
   }
 }
 
@@ -92,15 +81,9 @@ function setSequenceType(sequenceTypeValue: string) {
   sequenceType = Number(sequenceTypeValue) as Sequence;
   if (sequenceType === Sequence.Random) {
     sequenceInput.style.display = "none";
-    options = {
-      ...options,
-      sequenceOptions: {
-        isSequenceVisible: options.sequenceOptions.isSequenceVisible,
-        sequence: "",
-        sequenceType: Sequence.Random,
-      },
-    };
-    drawPattern({ horizontalOptions: options });
+    globalThis.canvas.getHorizontalPattern().setSequence("");
+    globalThis.canvas.getHorizontalPattern().setSequenceType(Sequence.Random);
+    globalThis.canvas.draw();
   } else {
     sequenceInput.style.display = "block";
   }
@@ -119,15 +102,8 @@ checkbox.addEventListener("input", (e: Event) => {
 });
 
 function setLegend(checked: boolean) {
-  options = {
-    ...options,
-    sequenceOptions: {
-      isSequenceVisible: checked,
-      sequence: options.sequenceOptions.sequence,
-      sequenceType: options.sequenceOptions.sequenceType,
-    },
-  };
-  drawPattern({ horizontalOptions: options });
+  globalThis.canvas.getHorizontalPattern().setIsSequenceVisible(checked);
+  globalThis.canvas.draw();
 }
 
 const hStroke = getUrlParam("hStroke");
@@ -144,14 +120,8 @@ strokeInput.addEventListener("input", (e: Event) => {
 
 function setStrokeInput(strokeInputValue: string) {
   if (isColor(strokeInputValue)) {
-    options = {
-      ...options,
-      strokeOptions: {
-        stroke: options.strokeOptions.stroke,
-        color: strokeInputValue,
-      },
-    };
-    drawPattern({ horizontalOptions: options });
+    globalThis.canvas.getHorizontalPattern().setStrokeColor(strokeInputValue);
+    globalThis.canvas.draw();
   }
 }
 
@@ -174,11 +144,6 @@ function setStrokeType(strokeType: Stroke) {
     strokeInput.style.display = "block";
     strokeInput.title = "HTML color or hex code";
   }
-  options = {
-    ...options,
-    strokeOptions: {
-      stroke: strokeType,
-    },
-  };
-  drawPattern({ horizontalOptions: options });
+  globalThis.canvas.getHorizontalPattern().setStroke(strokeType);
+  globalThis.canvas.draw();
 }

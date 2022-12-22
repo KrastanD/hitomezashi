@@ -1,4 +1,4 @@
-import { Coordinate } from "./types";
+import { Coordinate } from "./types.js";
 
 export function isColor(strColor: string) {
   const s = new Option().style;

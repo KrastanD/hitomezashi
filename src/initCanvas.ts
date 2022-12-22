@@ -1,10 +1,7 @@
-import "./src/sidebar.js";
-import "./src/horizontal.js";
-import "./src/background.js";
-import "./src/vertical.js";
-import initCanvas from "./src/initCanvas.js";
+import Canvas from "./classCanvas.js";
+import Pattern from "./classPattern.js";
 
-function resizeCanvas() {
+function initCanvas() {
   const htmlCanvas = document.getElementById("myCanvas") as HTMLCanvasElement;
   const context = htmlCanvas.getContext("2d");
   if (!context) {
@@ -20,16 +17,18 @@ function resizeCanvas() {
     document.documentElement.clientHeight ||
     document.body.clientHeight;
 
-  if (!globalThis.canvas) {
-    initCanvas();
+  const horizontalPattern = new Pattern();
+  const verticalPattern = new Pattern();
+
+  if (context) {
+    globalThis.canvas = new Canvas(
+      horizontalPattern,
+      verticalPattern,
+      context,
+      htmlCanvas.width,
+      htmlCanvas.height
+    );
   }
-
-  canvas.setWidth(htmlCanvas.width);
-  canvas.setHeight(htmlCanvas.height);
-
-  canvas.draw();
 }
 
-resizeCanvas();
-
-document.body.addEventListener("resize", () => resizeCanvas());
+export default initCanvas;

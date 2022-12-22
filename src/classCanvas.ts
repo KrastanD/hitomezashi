@@ -1,6 +1,6 @@
-import Pattern from "./classPattern";
-import { DISTANCE_APART } from "./constants";
-import { GetBitProps, Sequence, Stroke } from "./types";
+import Pattern from "./classPattern.js";
+import { DISTANCE_APART } from "./constants.js";
+import { GetBitProps, Sequence, Stroke } from "./types.js";
 import {
   charToBinary,
   convertBooleanUrlParam,
@@ -11,7 +11,7 @@ import {
   isEven,
   isVowel,
   shouldTextBeBlack,
-} from "./utils";
+} from "./utils.js";
 
 class Canvas {
   horizontalPattern: Pattern;
